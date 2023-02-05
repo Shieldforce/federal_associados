@@ -20,9 +20,25 @@ class Item extends Model
     /**
      * Relations
      */
-    public function itemable()
+
+    public function antena()
     {
-        return $this->morphTo();
+        return $this->morphOne(Antena::class, 'itemable');
+    }
+
+    public function veiculo()
+    {
+        return $this->morphOne(Veiculo::class, 'itemable');
+    }
+
+    public function rastreado()
+    {
+        return $this->morphOne(Rastreador::class, 'itemable');
+    }
+
+    public function chip()
+    {
+        return $this->morphOne(Chip::class, 'itemable');
     }
 
     public function order()

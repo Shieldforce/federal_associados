@@ -18,8 +18,8 @@ class Rastreador extends Model
      * Relations
      */
 
-    public function itemables()
+    public function item()
     {
-        return $this->morphMany(Item::class, 'itemable');
+        return $this->morphOne(Item::class, 'itemable');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Models\Item;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
-class Chip extends Model
+class Veiculo extends Model
 {
 
     use Filterable;
