@@ -9,14 +9,9 @@ use Illuminate\Support\Facades\Route;
 
 class Permissions extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        
+
             $routesAll = Route::getRoutes()->getRoutes();
             foreach ($routesAll as $key => $route)
             {
@@ -30,12 +25,12 @@ class Permissions extends Seeder
                     "description" => $routeAccept->wheres["description"] ?? "Não há descrição",
                     "group" => $routeAccept->wheres["group"] ?? "Genérico"
                 ]);
-                
+
             }
             $actions = array_column($routesAll, "action");
             $names = array_column($actions, "as");
             Permission::whereNotIn("name", $names)->delete();
-            
+
             Role::where('name', 'SA')->first()?->permissions()->sync(Permission::pluck('id'));
 
     }
