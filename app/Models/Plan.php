@@ -29,11 +29,17 @@ class Plan extends Model
         self::observe(new SaveFileObserver());
     }
 
+    /**
+     * Relations
+     */
     public function orders()
     {
         return $this->hasMany(Order::class, "plan_id", "id");
     }
 
+    /**
+     * Mutators
+     */
     protected function allowed(): Attribute
     {
         return Attribute::make(
