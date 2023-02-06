@@ -20,7 +20,6 @@ class Item extends Model
     /**
      * Relations
      */
-
     public function antena()
     {
         return $this->morphOne(Antena::class, 'itemable');
