@@ -4,7 +4,6 @@ namespace App\Http\Requests\Plan;
 
 use App\Enums\AllowedEnum;
 use App\Enums\OperatorEnum;
-use App\Enums\TypePlan;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PlanCreateRequest extends FormRequest
@@ -18,22 +17,22 @@ class PlanCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'type'         => ['required', 'string', 'in:' . TypePlan::values(true)],
-            'name'         => ['required', 'string'],
-            'description'  => ['required', 'string'],
-            'percentage'   => ['required', 'integer'],
-            'value'        => ['required', 'string'],
-            'allowed'      => ['array', 'in:' . AllowedEnum::values(true)],
-            'operator'     => ['string', 'in:' . OperatorEnum::values(true)],
+            'name'                => ['required', 'string'],
+            'description'         => ['required', 'string'],
+            'percentage'          => ['required', 'integer'],
+            'operator'            => ['required', 'string', 'in:' . OperatorEnum::values(true)],
+            'alloweds'            => ['required', 'array'],
+            'alloweds.*.type'     => ['required', 'string', 'in:' . AllowedEnum::values(true)],
+            'alloweds.*.value'    => ['required', 'string'],
+            'alloweds.*.rule'     => ['required', 'boolean'], // Default || Dinamic
         ];
     }
 
     public function messages()
     {
         return [
-            "type.in"       => "Tipos permitidos:" . TypePlan::values(true),
-            "allowed.in"    => "Permitidos:" . AllowedEnum::values(true),
-            "operator.in"   => "Operadoras permitidas:" . OperatorEnum::values(true),
+            "alloweds.*.type.in"  => "Permitidos:" . AllowedEnum::values(true),
+            "operator.in"         => "Operadoras permitidas:" . OperatorEnum::values(true),
         ];
     }
 }

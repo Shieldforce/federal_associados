@@ -10,12 +10,11 @@ class PlanListResource extends JsonResource
     {
 
         return [
-            'type'         => $this->type,
+            'id'           => $this->id,
             'name'         => $this->name,
             'description'  => $this->description,
             'percentage'   => $this->percentage,
-            'value'        => $this->value,
-            'allowed'      => $this->allowed,
+            'alloweds'     => $this->alloweds,
             'operator'     => $this->operator,
             'file_link'    => $this->file_link,
         ];

@@ -34,7 +34,7 @@ Route::prefix("/{$model}")
             ->name("saveFile")
             ->setWheres([
                 "group" => "{$crud}",
-                "description" => "Envio de Avatar!"
+                "description" => "Envio de Imagem!"
             ]);
 
         Route::put("/{{$model}?}", [$class, "update"])

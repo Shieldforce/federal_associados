@@ -4,7 +4,6 @@ namespace App\Http\Requests\Plan;
 
 use App\Enums\AllowedEnum;
 use App\Enums\OperatorEnum;
-use App\Enums\TypePlan;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PlanUpdateRequest extends FormRequest
@@ -18,20 +17,20 @@ class PlanUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'type'         => ['string', 'in:' . TypePlan::values(true)],
-            'name'         => ['string'],
-            'description'  => ['string'],
-            'percentage'   => ['integer'],
-            'value'        => ['string'],
-            'allowed'      => ['array', 'in:' . AllowedEnum::values(true)],
-            'operator'     => ['string', 'in:' . OperatorEnum::values(true)],
+            'name'                => ['string'],
+            'description'         => ['string'],
+            'percentage'          => ['integer'],
+            'operator'            => ['string', 'in:' . OperatorEnum::values(true)],
+            'alloweds'            => ['array'],
+            'alloweds.*.type'     => ['required', 'string', 'in:' . AllowedEnum::values(true)],
+            'alloweds.*.value'    => ['required', 'string'],
+            'alloweds.*.rule'     => ['required', 'boolean'], // Default || Dinamic
         ];
     }
 
     public function messages()
     {
         return [
-            "type.in"       => "Tipos permitidos:" . TypePlan::values(true),
             "allowed.in"    => "Permitidos:" . AllowedEnum::values(true),
             "operator.in"   => "Operadoras permitidas:" . OperatorEnum::values(true),
         ];

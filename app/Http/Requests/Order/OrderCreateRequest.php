@@ -3,9 +3,6 @@
 namespace App\Http\Requests\Order;
 
 use App\Enums\AllowedEnum;
-use App\Enums\OperatorEnum;
-use App\Enums\TypePlan;
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
