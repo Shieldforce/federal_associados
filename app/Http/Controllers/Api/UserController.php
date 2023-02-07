@@ -30,7 +30,7 @@ class UserController extends Controller
         if (Auth::user()->hasRoles('SA')) {
             $user->roles()->sync(Role::whereIn('name', $data['roles'] ?? [])->pluck('id'));
         } else {
-            $user->roles()->sync(Role::where('name', 'Usuário')->pluck('id'));
+            $user->roles()->sync(Role::where('name', 'Cliente')->pluck('id'));
         }
 
         return new UserListResource($user);
@@ -55,7 +55,7 @@ class UserController extends Controller
         if (Auth::user()->hasRoles('SA')) {
             $user->roles()->sync(Role::whereIn('name', $data['roles'] ?? [])->pluck('id'));
         } else {
-            $user->roles()->sync(Role::where('name', 'Usuário')->pluck('id'));
+            $user->roles()->sync(Role::where('name', 'Cliente')->pluck('id'));
         }
 
         return new UserListResource($user);

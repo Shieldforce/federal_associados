@@ -27,7 +27,7 @@ Route::prefix("/{$model}")
             ->name("show")
             ->setWheres([
                 "group" => "{$crud}",
-                "description" => "Mostrar Usuário!"
+                "description" => "Mostrar Cliente!"
             ]);
 
         Route::post("", [$class, "store"])

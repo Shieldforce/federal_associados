@@ -25,8 +25,8 @@ class Roles extends Seeder
 
 
         $role3 = [
-            'name' => "Usuário",
-            "description" => "Usuários do sistema!",
+            'name' => "Cliente",
+            "description" => "Clientes do sistema!",
         ];
         $role->updateOrCreate($role3, $role3);
 

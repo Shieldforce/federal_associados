@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -77,4 +78,17 @@ function sanitizeString($valor)
     $valor = str_replace("(", "", $valor);
     $valor = str_replace(")", "", $valor);
     return $valor;
+}
+
+function listUserPerRoles(array $nameRoles, $string = false)
+{
+    $return =  User::whereHas("roles", function ($roles) use ($nameRoles) {
+        $roles->whereIn("name", $nameRoles);
+    })->pluck("id")->toArray();
+
+    if($string) {
+        $return = implode(",", $return);
+    }
+
+    return $return;
 }

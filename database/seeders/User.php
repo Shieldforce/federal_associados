@@ -49,7 +49,7 @@ class User extends Seeder
 
         // -----------
         $usuario = [
-            'name' => 'Usuário',
+            'name' => 'Cliente',
             'email' => 'usuario@example.com',
             'password' => "federal@2023"
         ];
@@ -59,7 +59,7 @@ class User extends Seeder
         unset($usuario["password"]);
 
         $parceiro = \App\Models\User::updateOrCreate($usuario, $usuarioPass);
-        $parceiro->roles()->sync([Role::whereIn("name", ["Usuário"])->first()->id]);
+        $parceiro->roles()->sync([Role::whereIn("name", ["Cliente"])->first()->id]);
 
         // -----------
         $funcionario = [

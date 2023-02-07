@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-$model = "plan";
-$class = \App\Http\Controllers\Api\PlanController::class;
-$crud = "Planos";
+$model = "order";
+$class = \App\Http\Controllers\Api\OrderController::class;
+$crud = "Pedidos";
 
 Route::prefix("/{$model}")
     ->name("{$model}.")->group(function () use ($class, $model, $crud) {
@@ -28,13 +28,6 @@ Route::prefix("/{$model}")
             ->setWheres([
                 "group" => "{$crud}",
                 "description" => "Criação de {$crud}!"
-            ]);
-
-        Route::post("saveFile/{{$model}?}", [$class, "saveFile"])
-            ->name("saveFile")
-            ->setWheres([
-                "group" => "{$crud}",
-                "description" => "Envio de Avatar!"
             ]);
 
         Route::put("/{{$model}?}", [$class, "update"])
