@@ -19,7 +19,6 @@ class PlanUpdateRequest extends FormRequest
         return [
             'name'                => ['string'],
             'description'         => ['string'],
-            'percentage'          => ['integer'],
             'operator'            => ['string', 'in:' . OperatorEnum::values(true)],
             'alloweds'            => ['array'],
             'alloweds.*.type'     => ['required', 'string', 'in:' . AllowedEnum::values(true)],

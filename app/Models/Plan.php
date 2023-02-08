@@ -14,7 +14,6 @@ class Plan extends Model
     protected $fillable = [
         "name",
         "description",
-        "percentage",
         "operator",
         "file_link",
     ];

@@ -13,8 +13,6 @@ return new class extends Migration
 
             $table->string("name");
             $table->text("description");
-            $table->integer("percentage");
-            $table->string("operator");
             $table->string("file_link")->nullable();
 
             $table->timestamps();

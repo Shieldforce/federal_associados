@@ -19,7 +19,6 @@ class PlanCreateRequest extends FormRequest
         return [
             'name'                => ['required', 'string'],
             'description'         => ['required', 'string'],
-            'percentage'          => ['required', 'integer'],
             'operator'            => ['required', 'string', 'in:' . OperatorEnum::values(true)],
             'alloweds'            => ['required', 'array'],
             'alloweds.*.type'     => ['required', 'string', 'in:' . AllowedEnum::values(true)],

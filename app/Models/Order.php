@@ -14,6 +14,7 @@ class Order extends Model
     protected $fillable = [
         "plan_id",
         "client_id",
+        "obs",
     ];
 
     /**
