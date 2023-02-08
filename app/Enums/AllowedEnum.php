@@ -7,8 +7,8 @@ enum AllowedEnum : int
 {
     use BaseEnum;
 
-    case CHIPS            = 1;
-    case ANTENAS          = 2;
-    case RASTREADORES     = 3;
-    case VEICULOS         = 4;
+    case CHIP            = 1;
+    case ANTENA          = 2;
+    case RASTREADOR      = 3;
+    case VEICULO         = 4;
 }
