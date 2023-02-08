@@ -3,29 +3,13 @@
 declare(strict_types=1);
 
 namespace App\Enums;
-
-enum OperatorEnum : string
+enum OperatorEnum : int
 {
+    use BaseEnum;
 
-    case operator_1        = "claro";
-    case operator_2        = "vivo";
-    case operator_3        = "oi";
-    case operator_4        = "algar";
-    case operator_5        = "tim";
-
-    public static function values($string=null)
-    {
-        $cases = array_column(self::cases(), "value");
-
-        if($string) {
-            $cases = implode(",", $cases);
-        }
-
-        return $cases;
-    }
-
-    public static function names()
-    {
-        return array_column(self::cases(), "name");
-    }
+    case CLARO            = 1;
+    case TIM              = 2;
+    case OI               = 3;
+    case ALGAR            = 4;
+    case VIVO             = 5;
 }
