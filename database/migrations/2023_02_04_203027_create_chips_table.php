@@ -11,12 +11,6 @@ return new class extends Migration
         Schema::create('chips', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger("itemable_id");
-            $table->foreign("itemable_id")
-                ->references("id")
-                ->on("items")
-                ->onDelete("cascade");
-
             $table->string("number_registration");
 
             $table->timestamps();

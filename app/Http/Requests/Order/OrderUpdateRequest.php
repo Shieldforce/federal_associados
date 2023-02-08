@@ -3,8 +3,6 @@
 namespace App\Http\Requests\Order;
 
 use App\Enums\AllowedEnum;
-use App\Enums\OperatorEnum;
-use App\Enums\TypePlan;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -19,20 +17,53 @@ class OrderUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'plan_id'               => ['integer'],
-            'client_id'             => ['integer', 'in:' . listUserPerRoles(["Cliente"], true)],
             'items'                 => ['array', 'in:' . AllowedEnum::values(true)],
-            'items.*.chips'         => ['array', Rule::exists("chips", "id")],
-            'items.*.antenas'       => ['array', Rule::exists("antenas", "id")],
-            'items.*.rastreadores'  => ['array', Rule::exists("rastreadores", "id")],
-            'items.*.veiculos'      => ['array', Rule::exists("veiculos", "id")],
+
+            // Chips ------------------------------------------------
+            'items.*.chip'               => ['array'],
+            'items.*.chip.id'            => [
+                'array',
+                Rule::exists("chips", "id"),
+            ],
+            'items.*.chip.type'          => ['array'],
+            'items.*.chip.cancel_date'   => ['array'],
+            'items.*.chip.status'        => ['array'],
+
+            // Antena ------------------------------------------------
+            'items.*.antenna'        => ['array'],
+            'items.*.antenna.id'            => [
+                'array',
+                Rule::exists("antennae", "id"),
+            ],
+            'items.*.antenna.type'          => ['array'],
+            'items.*.antenna.cancel_date'   => ['array'],
+            'items.*.antenna.status'        => ['array'],
+
+            // Ratreador --------------------------------------------
+            'items.*.tracker'    => ['array'],
+            'items.*.tracker.id'            => [
+                'array',
+                Rule::exists("trackers", "id"),
+            ],
+            'items.*.tracker.type'          => ['array'],
+            'items.*.tracker.cancel_date'   => ['array'],
+            'items.*.tracker.status'        => ['array'],
+
+            // Veículo ----------------------------------------------
+            'items.*.vehicle'       => ['array'],
+            'items.*.vehicle.id'            => [
+                'array',
+                Rule::exists("vehicles", "id"),
+            ],
+            'items.*.vehicle.type'          => ['array', 'in:rented,own'],
+            'items.*.vehicle.cancel_date'   => ['array'],
+            'items.*.vehicle.status'        => ['array'],
         ];
     }
 
     public function messages()
     {
         return [
-            "client_id.in" => "O id que você está tentando passar não é de um cliente!",
             "items.in"     => "Os itens permitidos: " . AllowedEnum::values(true),
         ];
     }

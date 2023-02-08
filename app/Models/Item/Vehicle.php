@@ -5,13 +5,15 @@ namespace App\Models\Item;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
-class Veiculo extends Model
+class Vehicle extends Model
 {
 
     use Filterable;
 
-    protected $fillable = [
+    protected $table = "vehicles";
 
+    protected $fillable = [
+        "number_registration"
     ];
 
     /**

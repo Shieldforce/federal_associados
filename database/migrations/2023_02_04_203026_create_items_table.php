@@ -14,6 +14,10 @@ return new class extends Migration
             $table->string("itemable_type");
             $table->integer("itemable_id");
 
+            $table->string("type")->nullable();
+            $table->date("cancel_date")->nullable();
+            $table->string("status")->nullable();
+
             $table->unsignedBigInteger("order_id");
             $table->foreign("order_id")
                 ->references("id")

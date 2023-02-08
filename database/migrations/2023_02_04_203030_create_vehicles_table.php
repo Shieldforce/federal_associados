@@ -8,14 +8,8 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('antenas', function (Blueprint $table) {
+        Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
-
-            $table->unsignedBigInteger("itemable_id");
-            $table->foreign("itemable_id")
-                ->references("id")
-                ->on("items")
-                ->onDelete("cascade");
 
             $table->string("number_registration");
 
@@ -24,6 +18,6 @@ return new class extends Migration
     }
     public function down()
     {
-        Schema::dropIfExists('antenas');
+        Schema::dropIfExists('vehicles');
     }
 };
