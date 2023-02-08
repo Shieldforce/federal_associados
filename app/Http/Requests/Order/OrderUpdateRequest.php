@@ -17,7 +17,7 @@ class OrderUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'items'                 => ['array', 'in:' . AllowedEnum::values(true)],
+            'items'                 => ['array', 'in:' . AllowedEnum::names(true)],
 
             // Chips ------------------------------------------------
             'items.*.chip'               => ['array'],
@@ -64,7 +64,7 @@ class OrderUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            "items.in"     => "Os itens permitidos: " . AllowedEnum::values(true),
+            "items.in"     => "Os itens permitidos: " . AllowedEnum::names(true),
         ];
     }
 }

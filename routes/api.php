@@ -1,7 +1,7 @@
 <?php
 
 use App\Enums\OperatorEnum;
-use App\Enums\PlanItemsEnum;
+use App\Enums\AllowedEnum;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BenefitController;
 use App\Http\Controllers\Api\CategoryController;
@@ -15,7 +15,7 @@ Route::get('/enums/operators', function () {
 });
 
 Route::get('/enums/getPlanItens', function () {
-    return response()->json(["data" => PlanItemsEnum::names()], 200);
+    return response()->json(["data" => AllowedEnum::names()], 200);
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
