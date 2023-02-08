@@ -19,7 +19,7 @@ class OrderCreateRequest extends FormRequest
         return [
             'plan_id'               => ['required', 'integer'],
             'client_id'             => ['required', 'integer', 'in:' . listUserPerRoles(["Cliente"], true)],
-            'items'                 => ['required', 'array', 'in:' . AllowedEnum::values(true)],
+            'items'                 => ['required', 'array', 'in:' . AllowedEnum::names(true)],
             'items.*.chips'         => ['required', 'array', Rule::exists("chips", "id")],
             'items.*.antenas'       => ['required', 'array', Rule::exists("antenas", "id")],
             'items.*.rastreadores'  => ['required', 'array', Rule::exists("rastreadores", "id")],
@@ -31,7 +31,7 @@ class OrderCreateRequest extends FormRequest
     {
         return [
             "client_id.in" => "O id que você está tentando passar não é de um cliente!",
-            "items.in"     => "Os itens permitidos: " . AllowedEnum::values(true),
+            "items.in"     => "Os itens permitidos: " . AllowedEnum::names(true),
         ];
     }
 }

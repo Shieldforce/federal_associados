@@ -22,7 +22,7 @@ class PlanUpdateRequest extends FormRequest
             'percentage'          => ['integer'],
             'operator'            => ['string', 'in:' . OperatorEnum::values(true)],
             'alloweds'            => ['array'],
-            'alloweds.*.type'     => ['required', 'string', 'in:' . AllowedEnum::values(true)],
+            'alloweds.*.type'     => ['required', 'string', 'in:' . AllowedEnum::names(true)],
             'alloweds.*.value'    => ['required', 'string'],
             'alloweds.*.rule'     => ['required', 'boolean'], // Default || Dinamic
         ];
@@ -31,7 +31,7 @@ class PlanUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            "allowed.in"    => "Permitidos:" . AllowedEnum::values(true),
+            "allowed.in"    => "Permitidos:" . AllowedEnum::names(true),
             "operator.in"   => "Operadoras permitidas:" . OperatorEnum::values(true),
         ];
     }

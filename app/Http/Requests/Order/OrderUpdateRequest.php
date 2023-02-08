@@ -21,7 +21,7 @@ class OrderUpdateRequest extends FormRequest
         return [
             'plan_id'               => ['integer'],
             'client_id'             => ['integer', 'in:' . listUserPerRoles(["Cliente"], true)],
-            'items'                 => ['array', 'in:' . AllowedEnum::values(true)],
+            'items'                 => ['array', 'in:' . AllowedEnum::names(true)],
             'items.*.chips'         => ['array', Rule::exists("chips", "id")],
             'items.*.antenas'       => ['array', Rule::exists("antenas", "id")],
             'items.*.rastreadores'  => ['array', Rule::exists("rastreadores", "id")],
@@ -33,7 +33,7 @@ class OrderUpdateRequest extends FormRequest
     {
         return [
             "client_id.in" => "O id que você está tentando passar não é de um cliente!",
-            "items.in"     => "Os itens permitidos: " . AllowedEnum::values(true),
+            "items.in"     => "Os itens permitidos: " . AllowedEnum::names(true),
         ];
     }
 }
