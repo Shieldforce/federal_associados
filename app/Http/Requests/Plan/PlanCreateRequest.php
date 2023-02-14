@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Plan;
 
 use App\Enums\AllowedEnum;
-use App\Enums\OperatorEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PlanCreateRequest extends FormRequest
@@ -17,13 +16,15 @@ class PlanCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'                => ['required', 'string'],
-            'description'         => ['required', 'string'],
-            'operator'            => ['required', 'string', 'in:' . OperatorEnum::values(true)],
-            'alloweds'            => ['required', 'array'],
-            'alloweds.*.type'     => ['required', 'string', 'in:' . AllowedEnum::names(true)],
-            'alloweds.*.value'    => ['required', 'string'],
-            'alloweds.*.rule'     => ['required', 'boolean'], // Default || Dinamic
+            'name'                    => ['required', 'string'],
+            'description'             => ['required', 'string'],
+            'protect_plan'            => ['required', 'boolean'],
+            'tracking'                => ['required', 'boolean'],
+            'alloweds'                => ['required', 'array'],
+            'alloweds.*.type'         => ['required', 'string', 'in:' . AllowedEnum::names(true)],
+            'alloweds.*.value'        => ['required', 'string'],
+            'alloweds.*.rule'         => ['required', 'boolean'], // Default || Dinamic
+            'alloweds.*.required'     => ['required', 'boolean'],
         ];
     }
 
@@ -31,7 +32,6 @@ class PlanCreateRequest extends FormRequest
     {
         return [
             "alloweds.*.type.in"  => "Permitidos:" . AllowedEnum::names(true),
-            "operator.in"         => "Operadoras permitidas:" . OperatorEnum::values(true),
         ];
     }
 }

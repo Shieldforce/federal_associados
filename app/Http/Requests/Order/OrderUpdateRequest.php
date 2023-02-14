@@ -23,6 +23,7 @@ class OrderUpdateRequest extends FormRequest
             'items.*.cancel_date'          => ['date'],
             'items.*.status'               => ['string'],
             'items.*.number_registration'  => ['string'],
+            'items.*.reference_price_id'   => ['integer'],
         ];
     }
 

@@ -18,6 +18,7 @@ class Item extends Model
         "cancel_date",
         "status",
         "order_id",
+        "reference_price_id",
     ];
 
     /**

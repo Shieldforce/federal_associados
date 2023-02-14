@@ -24,6 +24,8 @@ return new class extends Migration
                 ->on("orders")
                 ->onDelete("cascade");
 
+            $table->unsignedBigInteger("reference_price_id")->nullable();
+
             $table->timestamps();
         });
     }

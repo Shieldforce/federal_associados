@@ -5,24 +5,22 @@ namespace App\Models;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
-class Allowed extends Model
+class Operator extends Model
 {
+
+    protected $table = "operators";
 
     use Filterable;
 
     protected $fillable = [
-        "plan_id",
-        "type",
-        "value",
-        "rule",
-        "required",
+        "name",
     ];
 
     /**
      * Relations
      */
-    public function plan()
+    public function chipPrices()
     {
-        return $this->hasMany(Plan::class, "id", "plan_id");
+        return $this->hasMany(ChipPrice::class, "operator_id", "id");
     }
 }
