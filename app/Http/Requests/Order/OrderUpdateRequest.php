@@ -17,6 +17,7 @@ class OrderUpdateRequest extends FormRequest
     {
         return [
             'items'                        => ['required', 'array'],
+            'shipping_id'                  => ['required', 'integer'],
             //----------------------------------------------------------------------------------------------------------
             'items.*.id'                   => ['integer'],
             'items.*.type'                 => ['required', 'string', 'in:' . AllowedEnum::names(true)],

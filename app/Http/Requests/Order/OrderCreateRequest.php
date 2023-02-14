@@ -18,6 +18,7 @@ class OrderCreateRequest extends FormRequest
         return [
             'plan_id'                      => ['required', 'integer'],
             'client_id'                    => ['required', 'integer', 'in:' . listUserPerRoles(["Cliente"], true)],
+            'shipping_id'                  => ['required', 'integer'],
             'items'                        => ['required', 'array'],
             //----------------------------------------------------------------------------------------------------------
             'items.*.id'                   => ['integer'],

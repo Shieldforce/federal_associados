@@ -14,6 +14,7 @@ class Order extends Model
     protected $fillable = [
         "plan_id",
         "client_id",
+        "shipping_id",
         "obs",
     ];
 
@@ -28,6 +29,11 @@ class Order extends Model
     public function client()
     {
         return $this->hasMany(User::class, "id", "client_id");
+    }
+
+    public function shipping()
+    {
+        return $this->hasMany(Shipping::class, "id", "shipping_id");
     }
 
     public function items()
