@@ -12,7 +12,15 @@ class OrderListResource extends JsonResource
         return [
             'id'      => $this->id,
             'plan'    => $this->plan,
-            'client'  => $this->client
+            'client'  => $this->client,
+            "value"  => $this->value,
+            "status"  => $this->status,
+            "dueDate"  => $this->dueDate,
+            "reference"  => $this->reference,
+            "type"  => $this->type,
+            "description"  => $this->description,
+            "activationDate"  => $this->activationDate,
+            "cancellationDate"  => $this->cancellationDate,
         ];
     }
 }

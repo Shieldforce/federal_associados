@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ChipPrices::class);
         $this->call(Plans::class);
         $this->call(Items::class);
+        $this->call(Orders::class);
     }
 }

@@ -23,9 +23,17 @@ return new class extends Migration
                 ->on("users")
                 ->onDelete("cascade");
 
+            $table->decimal("value",8,2);
+            $table->string("status");
+            $table->date("dueDate");
+            $table->string("reference");
+            $table->string("type");
+            $table->string("description")->nullable();
+            $table->date("activationDate")->nullable();
+            $table->date("cancellationDate")->nullable();
+
             $table->text("obs")
-                ->nullable()
-                ->default("Se nenhuma operadora for selecionada o chip será vivo!");
+                ->nullable();
 
             $table->timestamps();
         });

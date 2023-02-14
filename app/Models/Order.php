@@ -14,6 +14,14 @@ class Order extends Model
     protected $fillable = [
         "plan_id",
         "client_id",
+        "value",
+        "status",
+        "dueDate",
+        "reference",
+        "type",
+        "description",
+        "activationDate",
+        "cancellationDate",
         "obs",
     ];
 
