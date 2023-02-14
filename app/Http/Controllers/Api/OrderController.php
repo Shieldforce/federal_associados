@@ -42,4 +42,6 @@ class OrderController extends Controller
         $order->delete();
         return response()->json(200);
     }
+
+    
 }
