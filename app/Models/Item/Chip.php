@@ -10,8 +10,10 @@ class Chip extends Model
 
     use Filterable;
 
-    protected $fillable = [
+    protected $table = "chips";
 
+    protected $fillable = [
+        "number_registration"
     ];
 
     /**

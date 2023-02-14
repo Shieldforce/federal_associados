@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\Order\OrderEvent;
 use App\Events\Plan\PlanEvent;
+use App\Listeners\Order\OrderSaveListener;
 use App\Listeners\Plan\PlanSaveListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -11,11 +13,7 @@ use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
-    /**
-     * The event to listener mappings for the application.
-     *
-     * @var array<class-string, array<int, class-string>>
-     */
+
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
@@ -23,23 +21,16 @@ class EventServiceProvider extends ServiceProvider
         PlanEvent::class => [
             PlanSaveListener::class
         ],
+        OrderEvent::class => [
+            OrderSaveListener::class
+        ],
     ];
 
-    /**
-     * Register any events for your application.
-     *
-     * @return void
-     */
     public function boot()
     {
         //
     }
 
-    /**
-     * Determine if events and listeners should be automatically discovered.
-     *
-     * @return bool
-     */
     public function shouldDiscoverEvents()
     {
         return false;

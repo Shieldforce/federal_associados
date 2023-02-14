@@ -14,11 +14,17 @@ return new class extends Migration
             $table->string("itemable_type");
             $table->integer("itemable_id");
 
+            $table->string("type")->nullable();
+            $table->date("cancel_date")->nullable();
+            $table->string("status")->nullable();
+
             $table->unsignedBigInteger("order_id");
             $table->foreign("order_id")
                 ->references("id")
                 ->on("orders")
                 ->onDelete("cascade");
+
+            $table->unsignedBigInteger("reference_price_id")->nullable();
 
             $table->timestamps();
         });

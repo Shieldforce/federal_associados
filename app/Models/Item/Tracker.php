@@ -5,13 +5,15 @@ namespace App\Models\Item;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Model;
 
-class Antena extends Model
+class Tracker extends Model
 {
 
     use Filterable;
 
-    protected $fillable = [
+    protected $table = "trackers";
 
+    protected $fillable = [
+        "number_registration"
     ];
 
     /**

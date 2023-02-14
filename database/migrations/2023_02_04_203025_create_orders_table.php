@@ -23,6 +23,10 @@ return new class extends Migration
                 ->on("users")
                 ->onDelete("cascade");
 
+            $table->text("obs")
+                ->nullable()
+                ->default("Se nenhuma operadora for selecionada o chip será vivo!");
+
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("type");
             $table->decimal("value", 12, 2);
             $table->boolean("rule");
+            $table->boolean("required")->default(0);
 
             $table->timestamps();
         });

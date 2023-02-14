@@ -2,7 +2,7 @@
 namespace App\Enums;
 
 
-trait BaseEnum 
+trait BaseEnum
 {
   public function __invoke() {
     return $this->value;
@@ -27,9 +27,15 @@ trait BaseEnum
     return $cases;
   }
 
-  public static function names()
+  public static function names($string=null)
   {
-      return array_column(self::cases(), "name");
+      $cases = array_column(self::cases(), "name");
+
+      if($string) {
+          $cases = implode(",", $cases);
+      }
+
+      return $cases;
   }
 
 }

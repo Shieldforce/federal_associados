@@ -3,28 +3,23 @@
 declare(strict_types=1);
 
 namespace App\Enums;
-
-enum AllowedEnum : string
+enum AllowedEnum : int
 {
+    use BaseEnum;
 
-    case allowed_item_1      = "chip";
-    case allowed_item_2      = "rastreador";
-    case allowed_item_3      = "veículo";
-    case allowed_item_4      = "antena";
+    case CHIP            = 1;
+    case ANTENA          = 2;
+    case RASTREADOR      = 3;
+    case VEICULO         = 4;
 
-    public static function values($string=null)
+
+    public static function returnClass($name)
     {
-        $cases = array_column(self::cases(), "value");
+        if($name=="CHIP") return "\App\Models\Chip";
+        if($name=="ANTENA") return "\App\Models\Antenna";
+        if($name=="RASTREADOR") return "\App\Models\Tracker";
+        if($name=="VEICULO") return "\App\Models\Vehicle";
 
-        if($string) {
-            $cases = implode(",", $cases);
-        }
-
-        return $cases;
-    }
-
-    public static function names()
-    {
-        return array_column(self::cases(), "name");
+        return null;
     }
 }
