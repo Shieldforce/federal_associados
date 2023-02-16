@@ -19,6 +19,11 @@ class Plan extends Model
         "file_link",
     ];
 
+    protected $casts = [
+        "protect_plan" => "boolean",
+        "tracking" => "boolean",
+    ];
+
     protected static function boot()
     {
         parent::boot();
