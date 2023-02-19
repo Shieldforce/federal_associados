@@ -30,12 +30,12 @@ class Order extends Model
      */
     public function plan()
     {
-        return $this->hasMany(Plan::class, "id", "plan_id");
+        return $this->hasOne(Plan::class, "id", "plan_id");
     }
 
     public function client()
     {
-        return $this->hasMany(User::class, "id", "client_id");
+        return $this->hasOne(User::class, "id", "client_id");
     }
 
     public function items()
