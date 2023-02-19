@@ -22,12 +22,19 @@ return new class extends Migration
                 ->references("id")
                 ->on("users")
                 ->onDelete("cascade");
-
             $table->unsignedBigInteger("shipping_id");
             $table->foreign("shipping_id")
                 ->references("id")
                 ->on("shippings")
                 ->onDelete("cascade");
+            $table->decimal("value",8,2);
+            $table->string("status");
+            $table->date("dueDate");
+            $table->string("reference");
+            $table->string("type");
+            $table->string("description")->nullable();
+            $table->date("activationDate")->nullable();
+            $table->date("cancellationDate")->nullable();
 
             $table->text("obs")
                 ->nullable();
