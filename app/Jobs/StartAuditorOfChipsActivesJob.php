@@ -42,14 +42,7 @@ class StartAuditorOfChipsActivesJob implements ShouldQueue
         $batches = [];
 
         foreach ($chips as $chip) {
-            $batches[] = new AuditorOfChipsActivesJob([
-                "order_id"              => $chip->pedidos->first()->pedido_id ?? null,
-                "amount_billings"       => isset($chip->pedidos->first()->pedido_id_user) ?
-                    $this->calcBillingsInOpen($chip->pedidos->first()->user) : null,
-                "user_name"             => $chip->pedidos->first()->user->user_nome ?? null,
-                "chip_number"           => $chip->chip_iccid,
-                "line_number"           => $chip->linha->num ?? null,
-            ]);
+            $batches[] = new CalcBillingsInOpen($chip);
         }
 
         $batch = Bus::batch($batches)->then(function (Batch $batch) {
@@ -63,15 +56,5 @@ class StartAuditorOfChipsActivesJob implements ShouldQueue
         return $batch->id;
     }
 
-    private function calcBillingsInOpen(UserSystemOld $user)
-    {
-        $now = now()->format("Y-m-d");
-        $queryString = "SELECT COUNT(*) AS contador FROM pedido INNER JOIN user ";
-        $queryString .= "ON user_id = pedido_id_user WHERE pedido_tipo IN(1,2) AND pedido_status = '0' ";
-        $queryString .= "AND user.user_id = '{$user->user_id}' ";
-        $queryString .= "AND pedido_data_vencimento BETWEEN '2010-01-01' AND '" . $now . "' ";
-        $queryString .= "GROUP BY pedido_id_user;";
-        $query = DB::connection("system_old")->select($queryString);
-        return isset($query[0]) && isset($query[0]->contador) ? $query[0]->contador : null;
-    }
+
 }

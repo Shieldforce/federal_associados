@@ -12,7 +12,8 @@ class User extends Seeder
         $test = [
             'name' => 'testUser',
             'email' => 'test@example.com',
-            'password' => "federal@2023"
+            'password' => "federal@2023",
+            "cpf" => "11111111110"
         ];
 
         $testPass = $test;
@@ -25,7 +26,8 @@ class User extends Seeder
         $sa = [
             'name' => 'SA',
             'email' => 'sa@example.com',
-            'password' => "federal@2023"
+            'password' => "federal@2023",
+            "cpf" => "11111111111"
         ];
 
         $saPass = $sa;
@@ -38,7 +40,9 @@ class User extends Seeder
         $parceiro = [
             'name' => 'Parceiro',
             'email' => 'parceiro@example.com',
-            'password' => "federal@2023"
+            'password' => "federal@2023",
+            "cpf" => "11111111112"
+
         ];
 
         $parceiroPass = $parceiro;
@@ -51,7 +55,8 @@ class User extends Seeder
         $usuario = [
             'name' => 'Cliente',
             'email' => 'usuario@example.com',
-            'password' => "federal@2023"
+            'password' => "federal@2023",
+            "cpf" => "11111111113"
         ];
 
 
@@ -65,7 +70,8 @@ class User extends Seeder
         $funcionario = [
             'name' => 'Funcionário',
             'email' => 'funcionario@example.com',
-            'password' => "federal@2023"
+            'password' => "federal@2023",
+            "cpf" => "11111111114"
         ];
 
 
