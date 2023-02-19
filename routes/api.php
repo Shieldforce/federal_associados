@@ -8,15 +8,11 @@ use App\Http\Controllers\Api\CategoryController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/auth/login', [ AuthController::class, "login" ])->name("login");
 
-Route::get('/enums/operators', function () {
-    return response()->json(["data" => OperatorEnum::names()], 200);
-});
 
-Route::get('/enums/getPlanItens', function () {
-    return response()->json(["data" => AllowedEnum::names()], 200);
-});
+foreach (File::allFiles(__DIR__ . '/apiPublic') as $route_file) {
+    require $route_file->getPathname();
+}
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -28,11 +24,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ]);
 
     Route::middleware(['acl'])->group(function () {
-
         foreach (File::allFiles(__DIR__ . '/api') as $route_file) {
             require $route_file->getPathname();
         }
-
     }
     );
 

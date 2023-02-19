@@ -2,9 +2,10 @@
 
 namespace App\Observers;
 
+use Illuminate\Support\Str;
 use App\Services\SaveFileService;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
+use Illuminate\Database\Eloquent\Model;
 
 class SaveFileObserver
 {

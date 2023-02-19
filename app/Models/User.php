@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use App\Observers\SaveFileObserver;
+use Illuminate\Support\Str;
 use EloquentFilter\Filterable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Observers\SaveFileObserver;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,13 +18,19 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'cpf',
         'password',
         'file_link',
+        'uuid',
+        'father_id'
     ];
 
     protected static function boot()
     {
         parent::boot();
+        static::creating(function (User $model) {
+            $model->uuid = (string) Str::uuid();
+        });
         self::observe(new SaveFileObserver());
     }
 
@@ -35,6 +42,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function address()
+    {
+        return $this->morphOne(Address::class, 'addressable');
+    }
 
     public function roles()
     {
