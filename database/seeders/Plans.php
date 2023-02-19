@@ -10,18 +10,27 @@ class Plans extends Seeder
     public function run()
     {
         Plan::updateOrCreate([
-            "name"            => "Plano Pérola",
-            "description"     => "Plano Pérola",
+            "name"            => "Plano Esmeralda",
+            "description"     => "Neste Plano Esmeralda tera toda uma estrutura de rastreamento e acompanhamento do seu próprio veículo, com uma plataforma rápida e fácil de utilizar.Alem de Rastreamento o associado poderá usar os benefícios de Auxílio Funeral, Proteção por morte Acidental, Indique e ganhe (PBI), Clube de Benefícios e Muito Mais.",
+            "file_link"     => "files/plans/esmeralda.png",
         ]);
+
+        Plan::updateOrCreate([
+            "name"            => "Plano Perola",
+            "description"     => "Neste Plano pérola contemplamos os melhores Benefícios do Brasil, Internet de 1GB até 500GB. Alem de internet o associado poderá usar os benefícios de ligações (De acordo com o plano escolhido), Auxílio Funeral, Proteção por morte Acidental, Indique e ganhe (PBI), Clube de Benefícios e Muito Mais.",
+            "file_link"     => "files/plans/perola.png",
+            ]);
+
+        Plan::updateOrCreate([
+            "name"            => "Plano Prata",
+            "description"     => "Neste Plano Prata e contemplado os melhores Benefícios do Brasil, O associado alem de ter a proteção do seu veiculo poderá usufruir de benefícios tais como descontos em parceiros, rastreador, Auxílio Funeral, Proteção por morte Acidental, Indique e ganhe (PBI), Clube de Benefícios e Muito Mais.",
+            "file_link"     => "files/plans/prata.png",
+            ]);
 
         Plan::updateOrCreate([
             "name"            => "Plano Rubi",
-            "description"     => "Plano Rubi",
-        ]);
-
-        Plan::updateOrCreate([
-            "name"            => "Plano Diamante",
-            "description"     => "Plano Diamante",
-        ]);
+            "description"     => "Neste Plano Prata e contemplado os melhores Benefícios do Brasil, O associado alem de ter a proteção do seu veiculo poderá usufruir de benefícios tais como descontos em parceiros, rastreador, Auxílio Funeral, Proteção por morte Acidental, Indique e ganhe (PBI), Clube de Benefícios e Muito Mais.",
+            "file_link"     => "files/plans/rubi.png",
+            ]);
     }
 }
