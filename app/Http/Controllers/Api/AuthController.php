@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Middleware\ACL;
-use App\Http\Requests\AuthLoginRequest;
-use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Http\Middleware\ACL;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\AuthLoginRequest;
+use App\Http\Requests\AuthRegisterRequest;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -45,5 +46,14 @@ class AuthController extends Controller
         ]);
     }
 
+    public function register(AuthRegisterRequest $request)
+    {
+        $data = $request->validated();
+        $data['father_id'] = User::where('uuid', $data['father_uuid'])->first()->id;
+
+        $user = User::create($data);
+        $user->address()->create($data['address']);
+
+    }
  
 }

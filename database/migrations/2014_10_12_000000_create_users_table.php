@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('cpf');
             $table->string('phone')->nullable();
             $table->string('phone2')->nullable();
+            $table->string('uuid');
             $table->unsignedBigInteger("father_id") ->nullable();
             $table->foreign("father_id")
                 ->references("id")
