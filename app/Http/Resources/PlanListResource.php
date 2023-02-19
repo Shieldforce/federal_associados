@@ -14,8 +14,9 @@ class PlanListResource extends JsonResource
             'name'         => $this->name,
             'description'  => $this->description,
             'percentage'   => $this->percentage,
-            'alloweds'     => $this->alloweds,
-            'operator'     => $this->operator,
+            'alloweds'     => AllowedResource::collection($this->alloweds),
+            'tracking'     => $this->tracking,
+            'protect_plan' => $this->protect_plan,
             'file_link'    => $this->file_link,
         ];
     }

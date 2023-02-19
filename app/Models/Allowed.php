@@ -18,6 +18,9 @@ class Allowed extends Model
         "required",
     ];
 
+    protected $casts = [
+        "required" => "boolean"
+    ];
     /**
      * Relations
      */

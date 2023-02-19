@@ -55,6 +55,7 @@ class PlanController extends Controller
             $data = $request->validated();
             $plan->update($data);
             event(new PlanEvent($request, $plan));
+            DB::commit();
             return new PlanListResource($plan);
         } catch (Exception $exception) {
             DB::rollBack();
