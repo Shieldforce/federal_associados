@@ -43,4 +43,11 @@ Route::prefix("/{$model}")
                 "group" => "{$crud}",
                 "description" => "Exclusão de {$crud}!"
             ]);
+
+        Route::post("/auditorOfChipsActives", [$class, "auditorOfChipsActives"])
+            ->name("auditorOfChipsActives")
+            ->setWheres([
+                "group" => "{$crud}",
+                "description" => "Auditoria de Chips Ativos ({$crud})!"
+            ]);
     });

@@ -11,8 +11,10 @@
         "php": "^8.1.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
+        "laravel/horizon": "^5.14",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "predis/predis": "^2.1",
         "tucker-eric/eloquentfilter": "^3.1"
     },
     "require-dev": {

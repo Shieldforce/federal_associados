@@ -3,11 +3,24 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\AuditorOfChipActiveRequest;
 use App\Http\Requests\Order\OrderCreateRequest;
 use App\Http\Requests\Order\OrderUpdateRequest;
 use App\Http\Resources\OrderListResource;
+use App\Jobs\AuditorOfChipsActivesJob;
+use App\Jobs\StartAuditorOfChipsActivesJob;
 use App\Models\Order;
+use App\Models\SystemOld\ChipSystemOld;
+use App\Models\SystemOld\OrderSystemOld;
+use App\Models\SystemOld\UserSystemOld;
+use App\Services\ChipsService;
+use Illuminate\Bus\Batch;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class OrderController extends Controller
 {
@@ -43,5 +56,12 @@ class OrderController extends Controller
         return response()->json(200);
     }
 
-    
+    public function auditorOfChipsActives(AuditorOfChipActiveRequest $request)
+    {
+        StartAuditorOfChipsActivesJob::dispatch($request->iccids);
+    }
+
+
+
+
 }
