@@ -8,7 +8,9 @@ class PlanFilter extends ModelFilter
 {
     public $relations = [];
 
-
+    public function id($id) {
+        return $this->where('id', $id);
+    }
     public function type($search) {
         return $this->where('type', 'like', "%$search%");
     }
