@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\testController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect("https://documenter.getpostman.com/view/24662898/2s935oL4JK");
-});
+//Route::get('/', function () {
+//    return redirect("https://documenter.getpostman.com/view/24662898/2s935oL4JK");
+//});
+
+Route::get('/', [testController::class, 'test'])->name('test');
