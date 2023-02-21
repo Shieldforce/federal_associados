@@ -7,7 +7,7 @@ use App\Models\Plan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class Allowds extends Seeder
+class Alloweds extends Seeder
 {
     /**
      * Run the database seeds.
