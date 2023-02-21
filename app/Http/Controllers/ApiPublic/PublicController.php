@@ -23,7 +23,8 @@ class PublicController extends Controller
     public function getChipPrices(Request $request)
     {
         return ChipPriceListPublicResource::collection(
-            ChipPrice::filter($request->all())->paginate(10)
+            isset($request['paginate']) && $request['paginate'] == 'false'
+                ? ChipPrice::filter($request->all())->get() : ChipPrice::filter($request->all())->paginate(10)
         );
 
     }
