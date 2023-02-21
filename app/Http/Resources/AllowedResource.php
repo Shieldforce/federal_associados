@@ -10,6 +10,7 @@ class AllowedResource extends JsonResource
     {
 
         return [
+            'id' => $this->id,
             'type' => $this->type,
             'value' => $this->value,
             'rule' => $this->rule,

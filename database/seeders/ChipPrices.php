@@ -78,6 +78,8 @@ class ChipPrices extends Seeder
                 'allow_voice'  => false,
                 'price'        => 100.00,
                 'operator_id'  => 2,
+                'allow_antenna' => true,
+
             ],
             [
                 'name'         => "Chip (Internet) 200GB | R$ 190,00",
@@ -85,6 +87,8 @@ class ChipPrices extends Seeder
                 'allow_voice'  => false,
                 'price'        => 190.00,
                 'operator_id'  => 2,
+                'allow_antenna' => true,
+
             ],
             [
                 'name'         => "Chip (Internet) 300GB | R$ 280,00",
@@ -92,6 +96,8 @@ class ChipPrices extends Seeder
                 'allow_voice'  => false,
                 'price'        => 280.00,
                 'operator_id'  => 2,
+                'allow_antenna' => true,
+
             ],
             [
                 'name'         => "Chip (Internet) 400GB | R$ 380,00",
@@ -99,6 +105,8 @@ class ChipPrices extends Seeder
                 'allow_voice'  => false,
                 'price'        => 380.00,
                 'operator_id'  => 2,
+                'allow_antenna' => true,
+
             ],
             [
                 'name'         => "Chip (Internet) 500GB | R$ 480,00",
@@ -106,6 +114,8 @@ class ChipPrices extends Seeder
                 'allow_voice'  => false,
                 'price'        => 480.00,
                 'operator_id'  => 2,
+                'allow_antenna' => true,
+
             ],
         ];
         foreach ($vivoChipPrices as $vivoVhipsPrice) {
@@ -135,6 +145,8 @@ class ChipPrices extends Seeder
                 'allow_voice'  => false,
                 'price'        => 150.00,
                 'operator_id'  => 3,
+                'allow_antenna' => true,
+
             ],
         ];
         foreach ($timChipPrices as $timVhipsPrice) {

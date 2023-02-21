@@ -16,8 +16,15 @@ class ChipPrice extends Model
         "name",
         "GB",
         "allow_voice",
+        "allow_antenna",
         "price",
         "operator_id",
+    ];
+
+    protected $casts = [
+        "allow_voice" => "boolean",
+        "allow_antenna"  => "boolean",
+        "price" => "float"
     ];
 
     /**
