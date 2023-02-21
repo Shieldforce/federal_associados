@@ -15,7 +15,8 @@ return new class extends Migration
             $table->integer("GB");
             $table->boolean("allow_voice");
             $table->decimal("price", 12 ,2);
-
+            $table->boolean('allow_antenna')->default(0);
+            
             $table->unsignedBigInteger("operator_id");
             $table->foreign("operator_id")
                 ->references("id")

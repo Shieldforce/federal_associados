@@ -18,7 +18,7 @@ return new class extends Migration
                 ->onDelete("cascade");
 
             $table->string("type");
-            $table->decimal("value", 12, 2);
+            $table->decimal("value", 12, 2)->default(0);
             $table->boolean("rule");
             $table->boolean("required")->default(0);
 
