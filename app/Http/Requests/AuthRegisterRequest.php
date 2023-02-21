@@ -33,7 +33,7 @@ class AuthRegisterRequest extends FormRequest
             "phone2"                      => ["required", "string"],
             "password"                    => ["required", "confirmed"],
             "password_confirmation"       => ["required"],
-            "father_uuid"                 => ["required", Rule::exists('users','uuid')],
+            "father_uuid"                 => ["nullable", Rule::exists('users','uuid')],
             'address'                     => ['array'],
             "address.cep"                 => ["required", "string"],
             "address.address"             => ['required', "string"],

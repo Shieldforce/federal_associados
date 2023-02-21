@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Plan;
 use App\Models\User;
 use App\Http\Middleware\ACL;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
@@ -47,12 +49,32 @@ class AuthController extends Controller
     }
 
     public function register(AuthRegisterRequest $request)
-    {
+    {         
         $data = $request->validated();
-        $data['father_id'] = User::where('uuid', $data['father_uuid'])->first()->id;
+        DB::transaction(function () use ($data) {
+            $fatherId = isset($data['father_uuid']) 
+            ? User::where('uuid', $data['father_uuid'])->first()->id 
+            : User::where('id', 1)->first()->id;
+            $data['father_id'] = $fatherId;
+    
+            $user = User::create($data);
+            $user->address()->create($data['address']);
+                  
+            
+            $firstCalc = Plan::find($data['plan_id'])->alloweds()
+                ?->where('rule', 0)->where('required', true)
+                ?->pluck('value')->toArray();
+            if(count($firstCalc) > 0) {
+                $firstCalc = array_sum($firstCalc);
+            }
 
-        $user = User::create($data);
-        $user->address()->create($data['address']);
+            $dinamycItems = Plan::find($data['plan_id'])->alloweds()?->where('rule', 1)->where('required', true)->get();
+            foreach ($dinamycItems as $item) {
+                dd($item);
+            }
+    
+        });
+       
 
         
     }
