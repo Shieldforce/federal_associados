@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\ApiPublic;
 
+use App\Http\Resources\ChipPriceListPublicResource;
+use App\Models\ChipPrice;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,5 +19,13 @@ class PublicController extends Controller
         );
 
     }
- 
+
+    public function getChipPrices(Request $request)
+    {
+        return ChipPriceListPublicResource::collection(
+            ChipPrice::filter($request->all())->paginate(10)
+        );
+
+    }
+
 }
