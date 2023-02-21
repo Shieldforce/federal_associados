@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Observers\SaveFileObserver;
 use EloquentFilter\Filterable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Plan extends Model
