@@ -54,6 +54,7 @@ class AuthController extends Controller
         $user = User::create($data);
         $user->address()->create($data['address']);
 
+        
     }
  
 }

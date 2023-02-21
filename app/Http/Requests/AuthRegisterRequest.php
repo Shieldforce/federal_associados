@@ -28,7 +28,7 @@ class AuthRegisterRequest extends FormRequest
             "name"                        => ["required", "string", "min:5"],
             "email"                       => ["required", "email", "unique:users"],
             "password"                    => ["required", "string"],
-            "cpf"                         => ["required", "string"],
+            "cpf"                         => ["required", "string", "unique:users"],
             "phone"                       => ["required", "string"],
             "phone2"                      => ["required", "string"],
             "password"                    => ["required", "confirmed"],

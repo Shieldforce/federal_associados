@@ -14,14 +14,14 @@ class ChipPrices extends Seeder
         // Claro ---------------------------------------------------------
         $claroChipPrices = [
             [
-                'name'         => "Chip 1GB",
+                'name'         => "Chip (Internet e Voz) 1GB | R$ 30,00",
                 'GB'           => 1,
                 'allow_voice'  => true,
                 'price'        => 30.00,
                 'operator_id'  => 1,
             ],
             [
-                'name'         => "Chip 20GB",
+                'name'         => "Chip (Internet e Voz) 20GB | R$ 70,00",
                 'GB'           => 20,
                 'allow_voice'  => true,
                 'price'        => 70.00,
@@ -36,14 +36,14 @@ class ChipPrices extends Seeder
         // Vivo ----------------------------------------------------------
         $vivoChipPrices = [
             [
-                'name'         => "Chip 20GB",
+                'name'         => "Chip (Internet e Voz) 20GB | R$ 69,00",
                 'GB'           => 20,
                 'allow_voice'  => true,
                 'price'        => 69.00,
                 'operator_id'  => 2,
             ],
             [
-                'name'         => "Chip 40GB",
+                'name'         => "Chip (Internet e Voz) 40GB | R$ 99,00",
                 'GB'           => 40,
                 'allow_voice'  => true,
                 'price'        => 99.00,
@@ -51,21 +51,21 @@ class ChipPrices extends Seeder
             ],
             //---
             [
-                'name'         => "Chip 10GB",
+                'name'         => "Chip (Internet) 10GB | R$ 29,00",
                 'GB'           => 10,
                 'allow_voice'  => false,
                 'price'        => 29.00,
                 'operator_id'  => 2,
             ],
             [
-                'name'         => "Chip 40GB",
+                'name'         => "Chip (Internet) 40GB | R$ 50,00",
                 'GB'           => 40,
                 'allow_voice'  => false,
                 'price'        => 50.00,
                 'operator_id'  => 2,
             ],
             [
-                'name'         => "Chip 60GB",
+                'name'         => "Chip (Internet) 60GB | R$ 70,00",
                 'GB'           => 60,
                 'allow_voice'  => false,
                 'price'        => 70.00,
@@ -73,25 +73,49 @@ class ChipPrices extends Seeder
             ],
 
             [
-                'name'         => "Chip 100GB",
+                'name'         => "Chip (Internet) 100GB | R$ 100,00",
                 'GB'           => 100,
                 'allow_voice'  => false,
                 'price'        => 100.00,
                 'operator_id'  => 2,
+                'allow_antenna' => true,
+
             ],
             [
-                'name'         => "Chip 200GB",
+                'name'         => "Chip (Internet) 200GB | R$ 190,00",
                 'GB'           => 200,
                 'allow_voice'  => false,
                 'price'        => 190.00,
                 'operator_id'  => 2,
+                'allow_antenna' => true,
+
             ],
             [
-                'name'         => "Chip 300GB",
+                'name'         => "Chip (Internet) 300GB | R$ 280,00",
                 'GB'           => 300,
                 'allow_voice'  => false,
                 'price'        => 280.00,
                 'operator_id'  => 2,
+                'allow_antenna' => true,
+
+            ],
+            [
+                'name'         => "Chip (Internet) 400GB | R$ 380,00",
+                'GB'           => 400,
+                'allow_voice'  => false,
+                'price'        => 380.00,
+                'operator_id'  => 2,
+                'allow_antenna' => true,
+
+            ],
+            [
+                'name'         => "Chip (Internet) 500GB | R$ 480,00",
+                'GB'           => 500,
+                'allow_voice'  => false,
+                'price'        => 480.00,
+                'operator_id'  => 2,
+                'allow_antenna' => true,
+
             ],
         ];
         foreach ($vivoChipPrices as $vivoVhipsPrice) {
@@ -101,14 +125,14 @@ class ChipPrices extends Seeder
         // Tim ----------------------------------------------------------
         $timChipPrices = [
             [
-                'name'         => "Chip 1GB",
+                'name'         => "Chip (Internet e Voz) 1GB | R$ 30,00",
                 'GB'           => 1,
                 'allow_voice'  => true,
                 'price'        => 30.00,
                 'operator_id'  => 3,
             ],
             [
-                'name'         => "Chip 20GB",
+                'name'         => "Chip (Internet e Voz) 20GB | R$ 70,00",
                 'GB'           => 20,
                 'allow_voice'  => true,
                 'price'        => 70.00,
@@ -116,11 +140,13 @@ class ChipPrices extends Seeder
             ],
             //--
             [
-                'name'         => "Chip 500GB",
+                'name'         => "Chip (Internet) 500GB | R$ 500,00",
                 'GB'           => 500,
                 'allow_voice'  => false,
                 'price'        => 150.00,
                 'operator_id'  => 3,
+                'allow_antenna' => true,
+
             ],
         ];
         foreach ($timChipPrices as $timVhipsPrice) {

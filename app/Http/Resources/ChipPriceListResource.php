@@ -14,9 +14,10 @@ class ChipPriceListResource extends JsonResource
             'name'         => $this->name,
             "GB"           => $this->GB,
             "allow_voice"  => $this->allow_voice,
+            "allow_antenna"  => $this->allow_antenna,
             "price"        => $this->price,
             "operator_id"  => $this->operator_id,
-            "operator"     => $this->operator,
+            "operator"     => new OperatorListResource($this->operator),
         ];
     }
 }

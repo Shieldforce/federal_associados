@@ -17,6 +17,12 @@ class PlanListPublicResource extends JsonResource
             'tracking'     => $this->tracking,
             'protect_plan' => $this->protect_plan,
             'file_link'    => $this->file_link,
+            'planDefaultPrice' => $this->defaultPrice(),
         ];
+    }
+
+    private function defaultPrice() {
+        $value = $this->alloweds()->where('rule', 0)->where('required', true)->pluck('value')->toArray();
+        return array_sum($value);
     }
 }

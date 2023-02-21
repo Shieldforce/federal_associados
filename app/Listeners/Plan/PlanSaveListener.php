@@ -24,7 +24,7 @@ class PlanSaveListener
             if(isset($allowed["id"])) {
                 $allowedUpdate = ["id" => $allowed["id"]];
             }
-            Allowed::updateOrCreate($allowedUpdate, $allowed);
+            Allowed::updateOrCreate($allowedUpdate, $allowedUpdate);
         }
     }
 }

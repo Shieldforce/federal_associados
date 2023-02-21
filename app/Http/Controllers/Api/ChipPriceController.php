@@ -14,7 +14,8 @@ class ChipPriceController extends Controller
     public function index(Request $request)
     {
         return ChipPriceListResource::collection(
-            ChipPrice::filter($request->all())->paginate(10)
+            isset($request['paginate']) && $request['paginate'] == 'false' 
+             ? ChipPrice::filter($request->all())->get() : ChipPrice::filter($request->all())->paginate(10)
         );
     }
 
