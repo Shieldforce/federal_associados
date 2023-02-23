@@ -58,6 +58,8 @@ class OrderController extends Controller
 
     public function auditorOfChipsActives(AuditorOfChipActiveRequest $request)
     {
+//        $test = new StartAuditorOfChipsActivesJob($request->iccids);
+//        $test->handle();
         StartAuditorOfChipsActivesJob::dispatch($request->iccids);
 
 //        $teste = new StartAuditorOfChipsActivesJob($request->iccids);

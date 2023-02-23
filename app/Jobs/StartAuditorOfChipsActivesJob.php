@@ -35,7 +35,7 @@ class StartAuditorOfChipsActivesJob implements ShouldQueue
         $chips = ChipSystemOld::whereIn("chip_iccid", $this->iccids)
             ->with("linha")
             ->with(["pedidos" => function($pedidos) {
-                $pedidos->with("user");
+                $pedidos->where("pedido_tipo", 0)->with("user");
             }])
             ->get();
 
