@@ -15,7 +15,8 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "predis/predis": "^2.1",
-        "tucker-eric/eloquentfilter": "^3.1"
+        "tucker-eric/eloquentfilter": "^3.1",
+        "ext-curl": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
