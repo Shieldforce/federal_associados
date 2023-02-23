@@ -28,14 +28,24 @@ class CalcBillingsInOpen implements ShouldQueue
 
     public function handle()
     {
-        AuditorOfChipActiveSystemOld::create([
-            "order_id"              =>$this->chip->pedidos->first()->pedido_id ?? null,
-            "amount_billings"       => isset($this->chip->pedidos->first()->pedido_id_user) ?
-                $this->calcBillingsInOpen($this->chip->pedidos->first()->user) : null,
-            "user_name"             => $this->chip->pedidos->first()->user->user_nome ?? null,
-            "chip_number"           => $this->chip->chip_iccid,
-            "line_number"           => $this->chip->linha->num ?? null,
-        ]);
+
+        $query = DB::connection("system_old")->select("SELECT * FROM pedido INNER JOIN itens_pedido_chip ON pedido_id = itens_pedido_chip_id_pedido
+INNER JOIN chip ON itens_pedido_chip_id_chip = chip_id INNER JOIN `user` ON pedido_id_user = user_id WHERE chip_iccid = '{$this->chip}'AND pedido_tipo = 0");
+        $dados = [];
+        if (!empty($query)){
+            foreach ($query as $quer){
+                $dados = [
+                    "order_id"              =>$quer["pedido_id"] ?? null,
+                    "amount_billings"       => isset($quer["pedido_id_user"]) ?
+                        $this->calcBillingsInOpen($quer["pedido_id_user"]) : null,
+                    "user_name"             => $quer["user_nome"] ?? null,
+                    "chip_number"           => $quer["chip_iccid"],
+                    "line_number"           => $quer["num"] ?? null,
+                ];
+        }
+        }
+
+        AuditorOfChipActiveSystemOld::create($dados);
 
     }
 
