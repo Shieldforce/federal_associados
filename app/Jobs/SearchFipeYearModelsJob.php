@@ -45,7 +45,7 @@ class SearchFipeYearModelsJob implements ShouldQueue
 
             $class = EndpointsFipeEnum::year->value;
             $postParams['year'] = $results;
-            $batches[] = new $class((array) $postParams);
+            $batches[] = new $class($postParams);
         }
 
 

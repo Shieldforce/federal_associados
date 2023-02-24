@@ -3,7 +3,6 @@
 namespace App\Jobs\Fipe;
 
 use App\Models\Fipe\FipeVehicle;
-use App\Models\Fipe\FipeYear;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -16,6 +15,7 @@ use Throwable;
 class VehicleJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     public array $result;
 
     /**
@@ -23,7 +23,7 @@ class VehicleJob implements ShouldQueue
      *
      * @var int
      */
-    public int $timeout = 120;
+    public int $timeout = 1200;
 
     public function __construct(array $result)
     {

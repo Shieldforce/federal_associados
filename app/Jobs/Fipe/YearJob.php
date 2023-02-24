@@ -16,7 +16,7 @@ use Throwable;
 class YearJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $result;
+    public array $result;
     public function __construct(array $result)
     {
         $this->result = $result;
