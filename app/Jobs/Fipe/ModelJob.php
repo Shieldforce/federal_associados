@@ -24,11 +24,17 @@ class ModelJob implements ShouldQueue
 
     public function handle()
     {
-        FipeModel::firstOrCreate([
-            "codigoTabelaReferencia"    => $this->result['codigoTabelaReferencia'],
-            "codigoTipoVeiculo"         => $this->result['codigoTipoVeiculo'],
-            "codigoMarca"               => $this->result['Value'],
-            "label"                     =>$this->result['Label']
-        ]);
+        foreach ($this->result["Modelos"] as $modelo){
+            FipeModel::updateOrCreate(
+                ["codigoModelo"              => $modelo['Value'], "codigoTabelaReferencia" => $this->result['codigoTabelaReferencia']],
+                [
+                "codigoTabelaReferencia"    => $this->result['codigoTabelaReferencia'],
+                "codigoTipoVeiculo"         => $this->result['codigoTipoVeiculo'],
+                "codigoMarca"               => $this->result['codigoMarca'],
+                "codigoModelo"              => $modelo['Value'],
+                "label"                     => $modelo['Label']
+            ]);
+        }
+
     }
 }

@@ -16,5 +16,15 @@ class FipeVehicle extends Model
         "ano",
         "codigoTipoCombustivel",
         "anoModelo",
+        "Valor",
+        "Marca",
+        "Modelo",
+        "Combustivel",
+        "CodigoFipe",
+        "MesReferencia",
+        "Autenticacao",
+        "TipoVeiculo",
+        "SiglaCombustivel",
+        "DataConsulta",
     ];
 }

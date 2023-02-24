@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Enums;
 
 use App\Models\Fipe\FipeBrand;
+use App\Models\Fipe\FipeModel;
 use App\Models\Fipe\FipeReference;
+use App\Models\Fipe\FipeYear;
 
 enum EndpointsFipeEnum : string
 {
@@ -20,40 +22,24 @@ enum EndpointsFipeEnum : string
 
     case vehicle        = "\\App\\Jobs\\Fipe\\VehicleJob";
 
-    public static function enpointResolve($name)
+    public static function enpointResolve($name): ?string
     {
-        switch ($name) {
-            case self::reference->name:
-                return "/ConsultarTabelaDeReferencia";
-            case self::brand->name:
-                return "/ConsultarMarcas";
-            case self::model->name:
-                return "/ConsultarModelos";
-            case self::year->name:
-                return "/ConsultarAnoModelo";
-            case self::vehicle->name:
-                return "/ConsultarModelosAtravesDoAno";
-            default:
-                return null;
-        }
+        return match ($name) {
+            self::reference->name => "/ConsultarTabelaDeReferencia",
+            self::brand->name => "/ConsultarMarcas",
+            self::model->name => "/ConsultarModelos",
+            self::year->name => "/ConsultarAnoModelo",
+            self::vehicle->name => "/ConsultarValorComTodosParametros",
+            default => null,
+        };
     }
 
-    public static function methodResolve($name)
+    public static function methodResolve($name): ?string
     {
-        switch ($name) {
-            case self::reference->name:
-                return "POST";
-            case self::brand->name:
-                return "POST";
-            case self::model->name:
-                return "POST";
-            case self::year->name:
-                return "POST";
-            case self::vehicle->name:
-                return "POST";
-            default:
-                return null;
-        }
+        return match ($name) {
+            self::brand->name, self::model->name, self::year->name, self::vehicle->name, self::reference->name => "POST",
+            default => null,
+        };
     }
 
     public static function selectType($name, $vehicleType = null)
@@ -74,6 +60,24 @@ enum EndpointsFipeEnum : string
         if($name == self::model->name) {
             
             return FipeBrand::get(['Label', 'Value', 'vehicleType'])->toArray();
+        }
+
+        if($name == self::year->name) {
+
+                return FipeModel::get(['codigoModelo', 'codigoMarca','codigoTabelaReferencia', 'codigoTipoVeiculo'])->toArray();
+        }
+
+        if($name == self::vehicle->name) {
+
+            return FipeYear::get([
+                "codigoTabelaReferencia",
+                "codigoTipoVeiculo",
+                "codigoMarca",
+                "codigoModelo",
+                "Label",
+                "ano",
+                "codigoTipoCombustivel",
+                "anoModelo"])->toArray();
         }
 
         return [];
