@@ -24,9 +24,10 @@ class BrandJob implements ShouldQueue
 
     public function handle()
     {
-        FipeBrand::create([
+        FipeBrand::firstOrCreate([
             "Label"     => $this->result["Label"],
             "Value"     => $this->result["Value"],
+            "vehicleType" => $this->result["vehicleType"]
         ]);
     }
 }

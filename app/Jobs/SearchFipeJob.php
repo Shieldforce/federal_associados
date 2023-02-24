@@ -31,16 +31,40 @@ class SearchFipeJob implements ShouldQueue
 
     public function handle()
     {
+        $consulVehicleTypeLimiter = $this->endpointsFipeEnum->name == EndpointsFipeEnum::reference->name 
+        ? 1 
+        : 3;
 
-        $results = FipeCurlService::run(
-            $this->endpointsFipeEnum::methodResolve($this->endpointsFipeEnum->name),
-            $this->endpointsFipeEnum::enpointResolve($this->endpointsFipeEnum->name),
-            $this->selectType()
-        );
+
+        $allResults = [];
+        for ($vehicleType = 1; $vehicleType <= $consulVehicleTypeLimiter; $vehicleType++) {
+            
+            $results = FipeCurlService::run(
+                $this->endpointsFipeEnum::methodResolve($this->endpointsFipeEnum->name),
+                $this->endpointsFipeEnum::enpointResolve($this->endpointsFipeEnum->name),
+                $this->endpointsFipeEnum::selectType($this->endpointsFipeEnum->name, $vehicleType)
+            );
+
+            if ($this->endpointsFipeEnum->name == EndpointsFipeEnum::reference->name) {
+                $results = [$results[0]];
+            }
+
+            $arrayMap = array_map(function($value) use ($vehicleType) {
+                return [
+                    "vehicleType" => $vehicleType,
+                    ...$value
+                ];
+            }, $results);
+
+            $allResults = array_merge($allResults, $arrayMap);
+        }
 
         $batches = [];
-
-        foreach ($results as $item) {
+        
+     
+        
+        foreach ($allResults as $item) {
+          
             $class = $this->endpointsFipeEnum->value;
             $batches[] = new $class((array) $item);
         }
@@ -56,19 +80,5 @@ class SearchFipeJob implements ShouldQueue
         return $batch->id;
     }
 
-    private function selectType()
-    {
-        if($this->endpointsFipeEnum->name == "reference") {
-            return [];
-        }
-
-        if($this->endpointsFipeEnum->name == "brand") {
-            return [
-                "codigoTabelaReferencia" => 231,
-                "codigoTipoVeiculo"      => 1
-            ];
-        }
-
-        return [];
-    }
+   
 }

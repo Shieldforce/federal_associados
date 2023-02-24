@@ -3,6 +3,10 @@
 declare(strict_types=1);
 
 namespace App\Enums;
+
+use App\Models\Fipe\FipeBrand;
+use App\Models\Fipe\FipeReference;
+
 enum EndpointsFipeEnum : string
 {
     use BaseEnum;
@@ -50,5 +54,28 @@ enum EndpointsFipeEnum : string
             default:
                 return null;
         }
+    }
+
+    public static function selectType($name, $vehicleType = null)
+    {
+        if($name == self::reference->name) {
+            return [];
+        }
+
+        if($name == self::brand->name) {
+
+            $reference = FipeReference::orderBy('created_at', 'desc')->first();
+            return [
+                "codigoTabelaReferencia" => $reference->Codigo,
+                "codigoTipoVeiculo"      => $vehicleType
+            ];
+        }
+
+        if($name == self::model->name) {
+            
+            return FipeBrand::get(['Label', 'Value', 'vehicleType'])->toArray();
+        }
+
+        return [];
     }
 }

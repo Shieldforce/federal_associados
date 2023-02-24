@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\EndpointsFipeEnum;
-use App\Jobs\SearchFipeJob;
-use App\Models\SystemOld\UserSystemOld;
-use Illuminate\Bus\Batch;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\DB;
 use Throwable;
+use Illuminate\Bus\Batch;
+use App\Jobs\SearchFipeJob;
+use Illuminate\Http\Request;
+use App\Enums\EndpointsFipeEnum;
+use App\Jobs\SearchFipeModelsJob;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Bus;
+use App\Models\SystemOld\UserSystemOld;
 
 class testController extends Controller
 {
@@ -50,16 +51,16 @@ class testController extends Controller
 
     public function test2()
     {
+     
         $batches = [
             new SearchFipeJob(EndpointsFipeEnum::reference),
             new SearchFipeJob(EndpointsFipeEnum::brand),
         ];
-
         $batch = Bus::batch($batches)->then(function (Batch $batch) {
+            SearchFipeModelsJob::dispatch();
         })->catch(function (Batch $batch, Throwable $e) {
         })->finally(function (Batch $batch) {
         })->dispatch();
 
-        dd($batch->id);
     }
 }

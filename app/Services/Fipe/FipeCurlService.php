@@ -8,6 +8,8 @@ class FipeCurlService
 {
     public static function run(string $method, string $enpoint, array $postParams = [])
     {
+
+
         $curl = curl_init();
         $data = json_encode($postParams);
         if($enpoint == "/ConsultarTabelaDeReferencia") {
@@ -34,6 +36,7 @@ class FipeCurlService
         ));
         $response = curl_exec($curl);
         curl_close($curl);
+        
         return json_decode($response, true);
     }
 }

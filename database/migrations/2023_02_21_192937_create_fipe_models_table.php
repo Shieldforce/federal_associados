@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("codigoTabelaReferencia");
             $table->string("codigoTipoVeiculo");
             $table->string("codigoMarca");
+            $table->string("label");
 
             $table->timestamps();
         });

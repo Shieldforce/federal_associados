@@ -24,7 +24,7 @@ class ReferenceJob implements ShouldQueue
 
     public function handle()
     {
-        FipeReference::create([
+        FipeReference::firstOrCreate([
             "Mes"       => $this->result["Mes"],
             "Codigo"    => $this->result["Codigo"],
         ]);

@@ -13,6 +13,7 @@ return new class extends Migration
 
             $table->string("Label")->nullable();
             $table->string("Value")->nullable();
+            $table->tinyInteger("vehicleType");
 
             $table->timestamps();
         });

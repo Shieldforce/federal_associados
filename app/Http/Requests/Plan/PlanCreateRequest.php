@@ -22,7 +22,7 @@ class PlanCreateRequest extends FormRequest
             'tracking'                => ['required', 'boolean'],
             'alloweds'                => ['required', 'array'],
             'alloweds.*.type'         => ['required', 'string', 'in:' . AllowedEnum::names(true)],
-            'alloweds.*.value'        => ['required', 'string'],
+            'alloweds.*.value'        => ['string'],
             'alloweds.*.rule'         => ['required', 'boolean'], // Default || Dinamic
             'alloweds.*.required'     => ['required', 'boolean'],
         ];
