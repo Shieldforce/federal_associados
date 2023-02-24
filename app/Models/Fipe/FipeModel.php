@@ -12,5 +12,7 @@ class FipeModel extends Model
         "codigoTabelaReferencia",
         "codigoTipoVeiculo",
         "codigoMarca",
+        "Label",
+        "Value",
     ];
 }

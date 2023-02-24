@@ -11,6 +11,8 @@ return new class extends Migration
         Schema::create('fipe_brands', function (Blueprint $table) {
             $table->id();
 
+            $table->string("ReferenceValue")->nullable();
+            $table->string("ReferenceType")->nullable();
             $table->string("Label")->nullable();
             $table->string("Value")->nullable();
 

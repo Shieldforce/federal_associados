@@ -60,8 +60,8 @@ class OrderController extends Controller
     {
         StartAuditorOfChipsActivesJob::dispatch($request->iccids);
 
-//        $teste = new StartAuditorOfChipsActivesJob($request->iccids);
-//        $teste->handle();
+        /*$teste = new StartAuditorOfChipsActivesJob($request->iccids);
+        $teste->handle();*/
     }
 
 

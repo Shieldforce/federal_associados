@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Fipe\References;
 
 use App\Enums\EndpointsFipeEnum;
-use App\Enums\TypeVehicleEnum;
-use App\Models\Fipe\FipeReference;
 use App\Services\Fipe\FipeCurlService;
 use Illuminate\Bus\Batch;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -18,31 +15,23 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class SearchFipeJob implements ShouldQueue
+class SearchReferenceJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    protected EndpointsFipeEnum $endpointsFipeEnum;
-
-    public function __construct(EndpointsFipeEnum $endpointsFipeEnum)
-    {
-        $this->endpointsFipeEnum = $endpointsFipeEnum;
-    }
 
     public function handle()
     {
 
         $results = FipeCurlService::run(
-            $this->endpointsFipeEnum::methodResolve($this->endpointsFipeEnum->name),
-            $this->endpointsFipeEnum::enpointResolve($this->endpointsFipeEnum->name),
-            $this->selectType()
+            "POST",
+            "/ConsultarTabelaDeReferencia",
+            $this->listSearchFields()
         );
 
         $batches = [];
 
         foreach ($results as $item) {
-            $class = $this->endpointsFipeEnum->value;
-            $batches[] = new $class((array) $item);
+            $batches[] = new ReferenceJob((array) $item);
         }
 
         $batch = Bus::batch($batches)->then(function (Batch $batch) {
@@ -56,19 +45,8 @@ class SearchFipeJob implements ShouldQueue
         return $batch->id;
     }
 
-    private function selectType()
+    private function listSearchFields()
     {
-        if($this->endpointsFipeEnum->name == "reference") {
-            return [];
-        }
-
-        if($this->endpointsFipeEnum->name == "brand") {
-            return [
-                "codigoTabelaReferencia" => 231,
-                "codigoTipoVeiculo"      => 1
-            ];
-        }
-
         return [];
     }
 }

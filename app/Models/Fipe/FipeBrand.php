@@ -11,5 +11,7 @@ class FipeBrand extends Model
     protected  $fillable = [
         "Label",
 	    "Value",
+	    "ReferenceValue",
+	    "ReferenceType",
     ];
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\EndpointsFipeEnum;
-use App\Jobs\SearchFipeJob;
+use App\Jobs\Fipe\References\SearchFipeJob;
 use App\Models\SystemOld\UserSystemOld;
 use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;

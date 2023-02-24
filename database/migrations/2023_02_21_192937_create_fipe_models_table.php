@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('fipe_models', function (Blueprint $table) {
@@ -19,16 +14,13 @@ return new class extends Migration
             $table->string("codigoTabelaReferencia");
             $table->string("codigoTipoVeiculo");
             $table->string("codigoMarca");
+            $table->string("Label");
+            $table->string("Value");
 
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('fipe_models');
