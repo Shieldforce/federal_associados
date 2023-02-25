@@ -40,14 +40,8 @@ class SearchFipevehicleJob implements ShouldQueue
                 "tipoConsulta"=> "tradicional"
             ];
 
-            $results = FipeCurlService::run(
-                EndpointsFipeEnum::methodResolve(EndpointsFipeEnum::vehicle->name),
-                EndpointsFipeEnum::enpointResolve(EndpointsFipeEnum::vehicle->name),
-                $postParams
-            );
 
             $class = EndpointsFipeEnum::vehicle->value;
-            $postParams['vehicle'] = $results;
             $batches[] = new $class((array) $postParams);
         }
 

@@ -37,15 +37,9 @@ class SearchFipeYearModelsJob implements ShouldQueue
                 "codigoModelo"=> $model['codigoModelo']
             ];
 
-            $results = FipeCurlService::run(
-                EndpointsFipeEnum::methodResolve(EndpointsFipeEnum::year->name),
-                EndpointsFipeEnum::enpointResolve(EndpointsFipeEnum::year->name),
-                $postParams
-            );
-
             $class = EndpointsFipeEnum::year->value;
-            $postParams['year'] = $results;
-            $batches[] = new $class($postParams);
+
+            $batches[] = new $class((array) $postParams);
         }
 
 

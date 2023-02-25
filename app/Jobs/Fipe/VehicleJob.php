@@ -2,15 +2,16 @@
 
 namespace App\Jobs\Fipe;
 
-use App\Models\Fipe\FipeVehicle;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use App\Enums\EndpointsFipeEnum;
+use App\Models\Fipe\FipeVehicle;
+use App\Services\Fipe\FipeCurlService;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Throwable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 
 class VehicleJob implements ShouldQueue
 {
@@ -32,6 +33,13 @@ class VehicleJob implements ShouldQueue
 
     public function handle()
     {
+        $results = FipeCurlService::run(
+            EndpointsFipeEnum::methodResolve(EndpointsFipeEnum::vehicle->name),
+            EndpointsFipeEnum::enpointResolve(EndpointsFipeEnum::vehicle->name),
+            $this->result
+        );
+        $this->result['vehicle'] = $results;
+        
             FipeVehicle::updateOrCreate(
                 [
                     "codigoModelo" => $this->result['codigoModelo'],
@@ -59,3 +67,7 @@ class VehicleJob implements ShouldQueue
                 ]);
     }
 }
+
+
+
+

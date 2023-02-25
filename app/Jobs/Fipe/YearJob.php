@@ -2,16 +2,18 @@
 
 namespace App\Jobs\Fipe;
 
-use App\Models\Fipe\FipeModel;
+use Throwable;
 use App\Models\Fipe\FipeYear;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use App\Models\Fipe\FipeModel;
+use App\Enums\EndpointsFipeEnum;
+use App\Services\Fipe\FipeCurlService;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Throwable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 
 class YearJob implements ShouldQueue
 {
@@ -24,6 +26,15 @@ class YearJob implements ShouldQueue
 
     public function handle()
     {
+        
+        $results = FipeCurlService::run(
+            EndpointsFipeEnum::methodResolve(EndpointsFipeEnum::year->name),
+            EndpointsFipeEnum::enpointResolve(EndpointsFipeEnum::year->name),
+            $this->result
+        );
+
+        $this->result["year"] = $results;
+
         foreach ($this->result["year"] as $item){
             $dado = explode("-",$item['Value']);
             FipeYear::updateOrCreate(
