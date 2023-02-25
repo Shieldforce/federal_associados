@@ -25,15 +25,15 @@ class FipeApiConsultController extends Controller
     public function getModels(Request $request)
     {
         $reference = FipeReference::orderBy('created_at', 'desc')->first();
-        $model = FipeModel::where('codigoTabelaReferencia', $reference->id)
+        $model = FipeModel::where('codigoTabelaReferencia', $reference->Codigo)
             ->where('codigoMarca', $request['brand_code'])
-            ->where('vehicleType', $request['vehicle_type']);
+            ->where('codigoTipoVeiculo', $request['vehicle_type']);
 
         if ($request['search']) {
             $model->where('Label', 'like', "%" . $request['search'] . "%");
         }
 
-        return response()->json(['data' => $model], 200);
+        return response()->json(['data' => $model->get()], 200);
     }
 
     public function getYear(Request $request)
