@@ -17,10 +17,7 @@ class FipeApiConsultController extends Controller
 
     public function getBrands(Request $request)
     {
-
-        $reference = FipeReference::orderBy('created_at', 'desc')->first();
         $brands = FipeBrand::where('vehicleType', $request['vehicle_type'])->get();
-
 
         return response()->json(['data' => $brands], 200);
     }
