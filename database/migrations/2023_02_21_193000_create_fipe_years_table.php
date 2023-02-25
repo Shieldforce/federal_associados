@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string("codigoTipoVeiculo");
             $table->string("codigoMarca");
             $table->string("codigoModelo");
+            $table->string("Label");
+            $table->string("ano");
+            $table->string("codigoTipoCombustivel");
+            $table->string("anoModelo");
 
             $table->timestamps();
         });

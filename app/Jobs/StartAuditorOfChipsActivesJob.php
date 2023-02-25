@@ -42,6 +42,15 @@ class StartAuditorOfChipsActivesJob implements ShouldQueue
         $batches = [];
 
         foreach ($chips as $chip) {
+//            $now = now()->format("Y-m-d");
+//            $queryString = "SELECT COUNT(*) AS contador FROM pedido INNER JOIN user ";
+//            $queryString .= "ON user_id = pedido_id_user WHERE pedido_tipo IN(1,2) AND pedido_status = '0' ";
+//            $queryString .= "AND user.user_id = '" . $user . "' ";
+//            $queryString .= "AND pedido_data_vencimento BETWEEN '2010-01-01' AND '" . $now . "' ";
+//            $queryString .= "GROUP BY pedido_id_user";
+//            $query = DB::connection("system_old")->select($queryString);
+//            return isset($query) && !empty($query)  ? $query[0]->contador : null;
+//            dd($query);
             $batches[] = new CalcBillingsInOpen($chip);
         }
 

@@ -13,5 +13,9 @@ class FipeYear extends Model
         "codigoTipoVeiculo",
         "codigoMarca",
         "codigoModelo",
+        "Label",
+        "ano",
+        "codigoTipoCombustivel",
+        "anoModelo"
     ];
 }

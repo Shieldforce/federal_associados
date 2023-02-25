@@ -18,38 +18,35 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class SearchFipeModelsJob implements ShouldQueue
+class SearchFipevehicleJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     
     public function handle()
     {
-        $brands = EndpointsFipeEnum::selectType(EndpointsFipeEnum::model->name);
-        $modelos = [];
-
+        $vehicles = EndpointsFipeEnum::selectType(EndpointsFipeEnum::vehicle->name);
         $batches = [];
-        foreach ($brands as $brand) {
 
+        foreach ($vehicles as $vehicle) {
             $postParams  = [
-                "codigoTabelaReferencia"=> FipeReference::orderBy('created_at', 'desc')->first()->Codigo,
-                "codigoTipoVeiculo"=> $brand['vehicleType'],
-                "codigoMarca"=> $brand['Value']
+                "codigoTabelaReferencia"=> $vehicle['codigoTabelaReferencia'],
+                "codigoTipoVeiculo"=> $vehicle['codigoTipoVeiculo'],
+                "codigoMarca"=> $vehicle['codigoMarca'],
+                "ano"=> $vehicle['ano'],
+                "codigoTipoCombustivel"=> $vehicle['codigoTipoCombustivel'],
+                "anoModelo"=> $vehicle['anoModelo'],
+                "codigoModelo"=> $vehicle['codigoModelo'],
+                "tipoConsulta"=> "tradicional"
             ];
 
-            $results = FipeCurlService::run(
-                EndpointsFipeEnum::methodResolve(EndpointsFipeEnum::model->name),
-                EndpointsFipeEnum::enpointResolve(EndpointsFipeEnum::model->name),
-                $postParams
-            );
 
-
-            $class = EndpointsFipeEnum::model->value;
-            $postParams['Modelos'] = $results['Modelos'];
+            $class = EndpointsFipeEnum::vehicle->value;
             $batches[] = new $class((array) $postParams);
         }
 
-        $batch = Bus::batch($batches)->name('models')->then(function (Batch $batch) {
+
+        $batch = Bus::batch($batches)->name('vehicle')->then(function (Batch $batch) {
             Log::info("Job finalizado... Batch id: {$batch->id}");
         })->catch(function (Batch $batch, Throwable $e) {
             Log::error("Erro ao executar batch... Erro: {$e->getMessage()}");

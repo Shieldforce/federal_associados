@@ -23,6 +23,16 @@ return new class extends Migration
             $table->string("ano");
             $table->string("codigoTipoCombustivel");
             $table->string("anoModelo");
+            $table->string("Valor");
+            $table->string("Marca");
+            $table->string("Modelo");
+            $table->string("Combustivel");
+            $table->string("CodigoFipe");
+            $table->string("MesReferencia");
+            $table->string("Autenticacao");
+            $table->string("TipoVeiculo");
+            $table->string("SiglaCombustivel");
+            $table->string("DataConsulta");
 
             $table->timestamps();
         });

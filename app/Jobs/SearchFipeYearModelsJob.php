@@ -18,38 +18,32 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class SearchFipeModelsJob implements ShouldQueue
+class SearchFipeYearModelsJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     
     public function handle()
     {
-        $brands = EndpointsFipeEnum::selectType(EndpointsFipeEnum::model->name);
-        $modelos = [];
+        $models = EndpointsFipeEnum::selectType(EndpointsFipeEnum::year->name);
 
         $batches = [];
-        foreach ($brands as $brand) {
 
+        foreach ($models as $model) {
             $postParams  = [
-                "codigoTabelaReferencia"=> FipeReference::orderBy('created_at', 'desc')->first()->Codigo,
-                "codigoTipoVeiculo"=> $brand['vehicleType'],
-                "codigoMarca"=> $brand['Value']
+                "codigoTabelaReferencia"=> $model['codigoTabelaReferencia'],
+                "codigoTipoVeiculo"=> $model['codigoTipoVeiculo'],
+                "codigoMarca"=> $model['codigoMarca'],
+                "codigoModelo"=> $model['codigoModelo']
             ];
 
-            $results = FipeCurlService::run(
-                EndpointsFipeEnum::methodResolve(EndpointsFipeEnum::model->name),
-                EndpointsFipeEnum::enpointResolve(EndpointsFipeEnum::model->name),
-                $postParams
-            );
+            $class = EndpointsFipeEnum::year->value;
 
-
-            $class = EndpointsFipeEnum::model->value;
-            $postParams['Modelos'] = $results['Modelos'];
             $batches[] = new $class((array) $postParams);
         }
 
-        $batch = Bus::batch($batches)->name('models')->then(function (Batch $batch) {
+
+        $batch = Bus::batch($batches)->name('years')->then(function (Batch $batch) {
             Log::info("Job finalizado... Batch id: {$batch->id}");
         })->catch(function (Batch $batch, Throwable $e) {
             Log::error("Erro ao executar batch... Erro: {$e->getMessage()}");

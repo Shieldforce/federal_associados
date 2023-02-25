@@ -69,7 +69,7 @@ class SearchFipeJob implements ShouldQueue
             $batches[] = new $class((array) $item);
         }
 
-        $batch = Bus::batch($batches)->then(function (Batch $batch) {
+        $batch = Bus::batch($batches)->name($this->endpointsFipeEnum->name)->then(function (Batch $batch) {
             Log::info("Job finalizado... Batch id: {$batch->id}");
         })->catch(function (Batch $batch, Throwable $e) {
             Log::error("Erro ao executar batch... Erro: {$e->getMessage()}");
