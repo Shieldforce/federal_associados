@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Fipe\Models;
 
+use App\Models\Fipe\ControlJob;
 use App\Models\Fipe\FipeModel;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -17,20 +18,41 @@ class ModelJob implements ShouldQueue
     public $result;
 
     public $extraParams;
-    public function __construct(array $result, $extraParams = [])
+
+    public ControlJob $controlJob;
+
+
+    public function __construct(ControlJob $controlJob, array $result, $extraParams = [])
     {
+        $this->controlJob = $controlJob;
         $this->result = $result;
         $this->extraParams = $extraParams;
     }
 
     public function handle()
     {
-        FipeModel::create([
-            "codigoTabelaReferencia"       => $this->extraParams["ReferenceValue"],
-            "codigoTipoVeiculo"            => $this->extraParams["ReferenceType"],
-            "codigoMarca"                  => $this->extraParams["Value"],
-            "Label"                        => $this->result["Label"],
-            "Value"                        => $this->result["Value"],
+        //if($this->controlJob->finish_count <= $this->controlJob->total_count) {
+            FipeModel::create([
+                "codigoTabelaReferencia"       => $this->extraParams["codigoTabelaReferencia"],
+                "codigoTipoVeiculo"            => $this->extraParams["codigoTipoVeiculo"],
+                "codigoMarca"                  => $this->extraParams["codigoMarca"],
+                "Label"                        => $this->result["Label"] ?? "Não veio",
+                "Value"                        => $this->result["Value"] ?? "não veio",
+            ]);
+        /*}
+
+        $this->controlJob->update([
+            "finish_count" => $this->controlJob->finish_count + 1,
         ]);
+
+        if($this->controlJob->finish_count == $this->controlJob->total_count) {
+            $this->controlJob->finish = 1;
+            $this->controlJob->save();
+
+            //SearchModelJob::dispatch($this->controlJob);
+        }
+
+        return true;*/
+
     }
 }

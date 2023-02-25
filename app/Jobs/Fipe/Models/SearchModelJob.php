@@ -2,6 +2,8 @@
 
 namespace App\Jobs\Fipe\Models;
 
+use App\Enums\EndpointsFipeEnum;
+use App\Models\Fipe\ControlJob;
 use App\Models\Fipe\FipeBrand;
 use App\Models\Fipe\FipeReference;
 use App\Services\Fipe\FipeCurlService;
@@ -20,47 +22,45 @@ class SearchModelJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public ControlJob $controlJob;
+
+    public function __construct(ControlJob $controlJob)
+    {
+        $this->controlJob = $controlJob;
+    }
+
     public function handle()
     {
-        Log::info(json_encode($this->listSearchFields()));
-
-        foreach ($this->listSearchFields() as $execute) {
-
-            Log::info("entrou no loop");
-
+        $incrementResults = [];
+        foreach ($this->listSearchFields() as $index => $typeVehicleGroup) {
             $results = FipeCurlService::run(
                 "POST",
                 "/ConsultarModelos",
-                $execute
+                $typeVehicleGroup
             );
 
-            $batches = [];
-
-            foreach ($results as $item) {
-                $batches[] = new ModelJob((array)$item, $execute);
-            }
-
-            Bus::batch($batches)->then(function (Batch $batch) {
-                Log::info("Job finalizado... Batch id: {$batch->id}");
-            })->catch(function (Batch $batch, Throwable $e) {
-                Log::error("Erro ao executar batch... Erro: {$e->getMessage()}");
-            })->finally(function (Batch $batch) {
-                Log::info("Batch finalizado... Batch id: {$batch->id}");
-            })->dispatch();
-
+            $incrementResults[$index] = $results;
         }
+
+        $batches = [];
+
+        foreach ($incrementResults as $tipoVeiculo => $result) {
+            $batches[] = new ModelJob($this->controlJob, (array) $result["Modelos"], $this->listSearchFields()[$tipoVeiculo]);
+        }
+
+        Bus::batch($batches)->then(function (Batch $batch) {
+        })->catch(function (Batch $batch, Throwable $e) {
+        })->finally(function (Batch $batch) {
+        })->dispatch();
 
     }
 
     private function listSearchFields()
     {
-        sleep(5);
-
-        return FipeBrand::get([
-            "Label",
-            "Value",
-            "ReferenceValue",
-            "ReferenceType",
+       return FipeBrand::get([
+            "Value AS codigoMarca",
+            "ReferenceValue AS codigoTabelaReferencia",
+            "ReferenceType AS codigoTipoVeiculo",
         ])->toArray();
     }
 }

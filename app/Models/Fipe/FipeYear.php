@@ -13,5 +13,7 @@ class FipeYear extends Model
         "codigoTipoVeiculo",
         "codigoMarca",
         "codigoModelo",
+        "Label",
+        "Value",
     ];
 }

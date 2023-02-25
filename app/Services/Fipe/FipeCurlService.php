@@ -10,6 +10,7 @@ class FipeCurlService
     {
         $curl = curl_init();
         $data = json_encode($postParams);
+
         if($enpoint == "/ConsultarTabelaDeReferencia") {
             $contentLength = 'Content-Length: 0';
         }

@@ -3,6 +3,8 @@
 namespace App\Jobs\Fipe\References;
 
 use App\Enums\EndpointsFipeEnum;
+use App\Jobs\Fipe\Brands\SearchBrandJob;
+use App\Models\Fipe\ControlJob;
 use App\Services\Fipe\FipeCurlService;
 use Illuminate\Bus\Batch;
 use Illuminate\Bus\Batchable;
@@ -19,9 +21,15 @@ class SearchReferenceJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public ControlJob $controlJob;
+
+    public function __construct(ControlJob $controlJob)
+    {
+        $this->controlJob = $controlJob;
+    }
+
     public function handle()
     {
-
         $results = FipeCurlService::run(
             "POST",
             "/ConsultarTabelaDeReferencia",
@@ -30,16 +38,21 @@ class SearchReferenceJob implements ShouldQueue
 
         $batches = [];
 
+        $this->controlJob->update([
+            "total_count" => count($results),
+        ]);
+
         foreach ($results as $item) {
-            $batches[] = new ReferenceJob((array) $item);
+
+            $batches[] = new ReferenceJob($this->controlJob, (array) $item);
         }
 
+        $batches[] = new SearchBrandJob($this->controlJob);
+
         $batch = Bus::batch($batches)->then(function (Batch $batch) {
-            Log::info("Job finalizado... Batch id: {$batch->id}");
         })->catch(function (Batch $batch, Throwable $e) {
-            Log::error("Erro ao executar batch... Erro: {$e->getMessage()}");
         })->finally(function (Batch $batch) {
-            Log::info("Batch finalizado... Batch id: {$batch->id}");
+
         })->dispatch();
 
         return $batch->id;

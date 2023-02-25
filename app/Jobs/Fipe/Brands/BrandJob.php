@@ -2,6 +2,8 @@
 
 namespace App\Jobs\Fipe\Brands;
 
+use App\Jobs\Fipe\Models\SearchModelJob;
+use App\Models\Fipe\ControlJob;
 use App\Models\Fipe\FipeBrand;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -9,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class BrandJob implements ShouldQueue
 {
@@ -17,19 +20,40 @@ class BrandJob implements ShouldQueue
     public $result;
 
     public $extraParams;
-    public function __construct(array $result, $extraParams = [])
+
+    public ControlJob $controlJob;
+
+
+    public function __construct(ControlJob $controlJob, array $result, $extraParams = [])
     {
+        $this->controlJob = $controlJob;
         $this->result = $result;
         $this->extraParams = $extraParams;
     }
 
     public function handle()
     {
-        FipeBrand::create([
-            "Label"            => $this->result["Label"],
-            "Value"            => $this->result["Value"],
-            "ReferenceValue"   => $this->extraParams["codigoTabelaReferencia"],
-            "ReferenceType"    => $this->extraParams["codigoTipoVeiculo"],
+        //if($this->controlJob->finish_count <= $this->controlJob->total_count) {
+            FipeBrand::create([
+                "Label"            => $this->result["Label"] ?? null,
+                "Value"            => $this->result["Value"] ?? null,
+                "ReferenceValue"   => $this->extraParams["codigoTabelaReferencia"] ?? null,
+                "ReferenceType"    => $this->extraParams["codigoTipoVeiculo"] ?? null,
+            ]);
+        /*}
+
+        $this->controlJob->update([
+            "finish_count" => $this->controlJob->finish_count + 1
         ]);
+
+        if($this->controlJob->finish_count == $this->controlJob->total_count) {
+            $this->controlJob->finish = 1;
+            $this->controlJob->save();
+
+            // Next job ---->
+            //SearchModelJob::dispatch($this->controlJob)->onQueue("SearchModelJob");
+        }
+
+        return true;*/
     }
 }

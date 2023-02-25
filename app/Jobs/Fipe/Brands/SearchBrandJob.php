@@ -3,6 +3,9 @@
 namespace App\Jobs\Fipe\Brands;
 
 use App\Enums\EndpointsFipeEnum;
+use App\Jobs\Fipe\Models\SearchModelJob;
+use App\Models\Fipe\ControlJob;
+use App\Models\Fipe\FipeModel;
 use App\Models\Fipe\FipeReference;
 use App\Services\Fipe\FipeCurlService;
 use Illuminate\Bus\Batch;
@@ -20,50 +23,55 @@ class SearchBrandJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected string $reference;
+    public ControlJob $controlJob;
 
-    public function __construct(string $reference = null)
+    public function __construct(ControlJob $controlJob)
     {
-        $this->reference = $reference;
-        $this->endpointsFipeEnum = EndpointsFipeEnum::brand;
+        $this->controlJob = $controlJob;
     }
 
     public function handle()
     {
-        foreach ($this->listSearchFields() as $execute) {
-
+        $incrementResults = [];
+        $count = 0;
+        foreach ($this->listSearchFields() as $index => $typeVehicleGroup) {
             $results = FipeCurlService::run(
                 "POST",
                 "/ConsultarMarcas",
-                $execute
+                $typeVehicleGroup
             );
 
-            $batches = [];
-
-            foreach ($results as $item) {
-                $batches[] = new BrandJob((array) $item, $execute);
-            }
-
-            Bus::batch($batches)->then(function (Batch $batch) {
-                Log::info("Job finalizado... Batch id: {$batch->id}");
-            })->catch(function (Batch $batch, Throwable $e) {
-                Log::error("Erro ao executar batch... Erro: {$e->getMessage()}");
-            })->finally(function (Batch $batch) {
-                Log::info("Batch finalizado... Batch id: {$batch->id}");
-            })->dispatch();
-
+            $incrementResults[$index] = $results;
+            $count += count($results);
         }
+
+        $this->controlJob->update([
+            "type" => EndpointsFipeEnum::brand->value,
+            "total_count" => $count,
+            "finish_count" => 0,
+            "finish" => 0,
+        ]);
+
+        $batches = [];
+
+        foreach ($incrementResults as $tipoVeiculo => $results) {
+            foreach ($results as $result) {
+                $batches[] = new BrandJob($this->controlJob, (array) $result, $this->listSearchFields()[$tipoVeiculo]);
+            }
+        }
+
+        $batches[] = new SearchModelJob($this->controlJob);
+
+        Bus::batch($batches)->then(function (Batch $batch) {
+        })->catch(function (Batch $batch, Throwable $e) {
+        })->finally(function (Batch $batch) {
+        })->dispatch();
+
     }
 
     private function listSearchFields()
     {
-        sleep(5);
-
-        $reference = FipeReference::where("Mes", $this->reference)->first();
-
-        if(!isset($reference)) {
-            $reference = FipeReference::first();
-        }
+        $reference = FipeReference::first();
 
         return [
             [
