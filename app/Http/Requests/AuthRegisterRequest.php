@@ -2,32 +2,26 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AuthRegisterRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
+        if(env("APP_ENV")=="local") {
+            User::where("email", "shieldforce2@gmail.com")->delete();
+        }
+
         return [
             "name"                        => ["required", "string", "min:5"],
             "email"                       => ["required", "email", "unique:users"],
-            "password"                    => ["required", "string"],
             "cpf"                         => ["required", "string", "unique:users"],
             "phone"                       => ["required", "string"],
             "phone2"                      => ["required", "string"],
@@ -43,7 +37,10 @@ class AuthRegisterRequest extends FormRequest
             "address.state"               => ['required', "string"],
             "address.complement"          => ['nullable', "string"],
             "address.refer_point"         => ['required', "string"],
-            "plan_id"                     => ["required", Rule::exists('plans','id')]
+            "plan_id"                     => ["required", Rule::exists('plans','id')],
+            "refer_chip_id"               => ["integer"],
+            "refer_antenna_id"            => ["integer"],
+            "refer_vehicle_id"            => ["integer"],
         ];
     }
 }

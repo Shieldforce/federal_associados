@@ -4,18 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->decimal("value",8,2);
+            $table->decimal("value", 8, 2);
             $table->string("status");
-            $table->date("dueDate");
+            $table->string("dueDay");
             $table->string("reference");
-            $table->string("type");
-            $table->string("description")->nullable();
+            $table->string("type")->nullable();
             $table->date("activationDate")->nullable();
             $table->date("cancellationDate")->nullable();
             $table->text("obs")->nullable();
@@ -42,6 +40,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+
     public function down()
     {
         Schema::dropIfExists('orders');
