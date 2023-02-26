@@ -21,10 +21,19 @@ class PlanSaveListener
         foreach ($request->alloweds as $allowed) {
             $allowed["plan_id"] = $event->plan->id ?? null;
             $allowedUpdate = $allowed;
-            if(isset($allowed["id"])) {
+
+
+            if (isset($allowed["id"])) {
                 $allowedUpdate = ["id" => $allowed["id"]];
             }
-            Allowed::updateOrCreate($allowedUpdate, $allowedUpdate);
+
+            Allowed::updateOrCreate($allowedUpdate, [
+                "required" => $allowed['required'],
+                "type" => $allowed['type'],
+                "value" => $allowed['value'] ?? 0,
+                "rule" => $allowed['rule'],
+                "plan_id" => $allowed['plan_id']
+            ]);
         }
     }
 }
