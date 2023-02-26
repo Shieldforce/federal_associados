@@ -18,7 +18,7 @@ class Item extends Model
         "cancel_date",
         "status",
         "order_id",
-        "reference_price_id",
+        "reference_price_id", // Tanto da tabela de preço de chip quanto de fipe_vehicle
     ];
 
     /**

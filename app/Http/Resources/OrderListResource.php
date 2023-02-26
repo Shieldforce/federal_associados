@@ -15,7 +15,7 @@ class OrderListResource extends JsonResource
             'client'            => $this->client,
             "value"             => $this->value,
             "status"            => $this->status,
-            "dueDate"           => $this->dueDate,
+            "dueDay"            => $this->dueDay,
             "reference"         => $this->reference,
             "type"              => $this->type,
             "description"       => $this->description,

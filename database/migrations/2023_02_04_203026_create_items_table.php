@@ -4,15 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
 
             $table->string("itemable_type");
-            $table->integer("itemable_id");
+            $table->integer("itemable_id")->nullable();
 
             $table->string("type")->nullable();
             $table->date("cancel_date")->nullable();
@@ -29,6 +28,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+
     public function down()
     {
         Schema::dropIfExists('items');
