@@ -18,6 +18,7 @@ class Plan extends Model
         "protect_plan",
         "tracking",
         "file_link",
+        "min_price"
     ];
 
     protected $casts = [

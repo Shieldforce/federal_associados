@@ -10,14 +10,15 @@ class PlanListResource extends JsonResource
     {
 
         return [
-            'id'           => $this->id,
-            'name'         => $this->name,
-            'description'  => $this->description,
-            'percentage'   => $this->percentage,
-            'alloweds'     => AllowedResource::collection($this->alloweds),
-            'tracking'     => $this->tracking,
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'percentage' => $this->percentage,
+            'min_price' => $this->min_price,
+            'alloweds' => AllowedResource::collection($this->alloweds),
+            'tracking' => $this->tracking,
             'protect_plan' => $this->protect_plan,
-            'file_link'    => $this->file_link,
+            'file_link' => $this->file_link,
         ];
     }
 }

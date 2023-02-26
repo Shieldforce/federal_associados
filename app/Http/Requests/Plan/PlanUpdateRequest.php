@@ -16,22 +16,24 @@ class PlanUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'                    => ['string'],
-            'description'             => ['string'],
-            'protect_plan'            => ['boolean'],
-            'tracking'                => ['boolean'],
-            'alloweds'                => ['array'],
-            'alloweds.*.type'         => ['required', 'string', 'in:' . AllowedEnum::names(true)],
-            'alloweds.*.value'        => ['string'],
-            'alloweds.*.rule'         => ['required', 'boolean'], // Default || Dinamic
-            'alloweds.*.required'     => ['boolean'],
+            'name' => ['string'],
+            'description' => ['string'],
+            'protect_plan' => ['boolean'],
+            'min_price' => ['required', 'numeric'],
+            'tracking' => ['boolean'],
+            'alloweds' => ['array'],
+            'alloweds.*.type' => ['required', 'string', 'in:' . AllowedEnum::names(true)],
+            'alloweds.*.value' => ['string'],
+            'alloweds.*.rule' => ['required', 'boolean'],
+            // Default || Dinamic
+            'alloweds.*.required' => ['boolean'],
         ];
     }
 
     public function messages()
     {
         return [
-            "allowed.in"    => "Permitidos:" . AllowedEnum::names(true),
+            "allowed.in" => "Permitidos:" . AllowedEnum::names(true),
         ];
     }
 }
