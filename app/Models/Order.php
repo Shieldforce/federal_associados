@@ -22,9 +22,10 @@ class Order extends Model
         "dueDay",
         "reference",
         "type",
-        "description",
         "activationDate",
         "cancellationDate",
+        "adhesion_percentage",
+        "adhesion_price",
         "obs",
     ];
 

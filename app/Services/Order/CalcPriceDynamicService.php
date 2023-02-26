@@ -6,7 +6,9 @@ use App\Enums\AllowedEnum;
 use App\Models\ChipPrice;
 use App\Models\Fipe\FipeVehicle;
 use App\Models\Plan;
+use App\Services\CalcPercentageCarService;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Log;
 
 class CalcPriceDynamicService
 {
@@ -22,7 +24,7 @@ class CalcPriceDynamicService
             if ($allowed->required) {
                 self::validateTypes($allowed->type, $data);
             }
-            $totalPrice += self::calculateMyType($allowed->type, $data);
+            $totalPrice += (float)self::calculateMyType($allowed->type, $data);
         }
         return $totalPrice;
     }
@@ -48,7 +50,7 @@ class CalcPriceDynamicService
     {
         if ($type == AllowedEnum::VEICULO->name && isset($data['refer_vehicle_id'])) {
             $response = response(["errors" => ["refer_vehicle_id" => ["Veiculo não encontrado na nossa base de dados!"]]], 422);
-            return FipeVehicle::find($data['refer_vehicle_id'])->ValorReal ?? throw new HttpResponseException(
+            return CalcPercentageCarService::run(FipeVehicle::find($data['refer_vehicle_id']), $data) ?? throw new HttpResponseException(
                 $response,
             );
         }

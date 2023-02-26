@@ -4,6 +4,7 @@ namespace App\Services\Order;
 
 use App\Enums\AllowedEnum;
 use App\Models\Plan;
+use Illuminate\Support\Facades\Log;
 
 class CalcPriceFixedService
 {
@@ -24,7 +25,7 @@ class CalcPriceFixedService
             ->get();
 
         foreach ($alloweds as $allowed) {
-            $totalPrice += self::calculateMyType($allowed, $data);
+            $totalPrice += (float)self::calculateMyType($allowed, $data);
         }
         return $totalPrice;
     }

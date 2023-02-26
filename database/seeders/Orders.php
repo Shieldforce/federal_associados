@@ -18,7 +18,6 @@ class Orders extends Seeder
             "dueDay"           => '10',
             "reference"        => "teste",
             "type"             => "teste",
-            "description"      => "teste",
             "activationDate"   => '2023-02-14',
             "cancellationDate" => '2023-02-14',
         ]);

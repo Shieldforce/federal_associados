@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\StatusEnum;
 use App\Models\Order;
 use App\Models\Plan;
 use App\Models\User;
 use App\Http\Middleware\ACL;
 use App\Services\Order\CalcPriceDynamicService;
 use App\Services\Order\CalcPriceFixedService;
+use App\Services\Order\CreateItemsService;
 use App\Services\Order\VerifyIsPriceFixedOrDynamicService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -57,7 +59,7 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
-        DB::transaction(function () use ($data) {
+        return DB::transaction(function () use ($data) {
 
             $fatherId = isset($data['father_uuid'])
                 ? User::where('uuid', $data['father_uuid'])->first()->id
@@ -68,21 +70,27 @@ class AuthController extends Controller
 
             $user->address()->create($data['address']);
 
-            $price = VerifyIsPriceFixedOrDynamicService::run($data);
+            $priceAdhesion = VerifyIsPriceFixedOrDynamicService::run($data);
 
             $createOrder = Order::create([
-                "plan_id"     => $data["plan_id"],
-                "client_id"   => $data["client_id"],
-                "shipping_id" => $data["shipping_id"] ?? null,
-                "value"       => $price ?? null,
-                "status"      => $data["status"] ?? null,
-                "dueDay"      => "10" ?? null,
-                "reference"   => now()->format("m/Y"),
-                "type"        => "default",
-                "obs"         => $data["obs"] ?? null,
+                "plan_id"             => $data["plan_id"],
+                "client_id"           => $user->id,
+                "value"               => $priceAdhesion ?? null,
+                "status"              => StatusEnum::ABERTA ?? null,
+                "dueDay"              => "10" ?? null,
+                "reference"           => now()->format("m/Y"),
+                "type"                => "default",
+                "obs"                 => $data["obs"] ?? null,
+                "adhesion_percentage" => $data["adhesion_percentage"] ?? null,
+                "adhesion_price"      => $priceAdhesion ?? null,
             ]);
 
-            #TODO: items de orders tem que receber os refs -> ref_chip_id e ref_vehicle_id
+            CreateItemsService::run($createOrder, $data);
+
+            return response()->json([
+                "user"  => $user,
+                "order" => $createOrder
+            ]);
 
         });
     }
