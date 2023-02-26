@@ -31,14 +31,14 @@ class SearchFipeJob implements ShouldQueue
 
     public function handle()
     {
-        $consulVehicleTypeLimiter = $this->endpointsFipeEnum->name == EndpointsFipeEnum::reference->name 
-        ? 1 
-        : 3;
+        $consulVehicleTypeLimiter = $this->endpointsFipeEnum->name == EndpointsFipeEnum::reference->name
+            ? 1
+            : 3;
 
 
         $allResults = [];
         for ($vehicleType = 1; $vehicleType <= $consulVehicleTypeLimiter; $vehicleType++) {
-            
+
             $results = FipeCurlService::run(
                 $this->endpointsFipeEnum::methodResolve($this->endpointsFipeEnum->name),
                 $this->endpointsFipeEnum::enpointResolve($this->endpointsFipeEnum->name),
@@ -49,7 +49,7 @@ class SearchFipeJob implements ShouldQueue
                 $results = [$results[0]];
             }
 
-            $arrayMap = array_map(function($value) use ($vehicleType) {
+            $arrayMap = array_map(function ($value) use ($vehicleType) {
                 return [
                     "vehicleType" => $vehicleType,
                     ...$value
@@ -60,11 +60,11 @@ class SearchFipeJob implements ShouldQueue
         }
 
         $batches = [];
-        
-     
-        
+
+
+
         foreach ($allResults as $item) {
-          
+
             $class = $this->endpointsFipeEnum->value;
             $batches[] = new $class((array) $item);
         }
@@ -80,5 +80,5 @@ class SearchFipeJob implements ShouldQueue
         return $batch->id;
     }
 
-   
+
 }
