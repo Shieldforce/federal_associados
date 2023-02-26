@@ -25,4 +25,11 @@ Route::prefix("/{$model}")
                 "group" => "{$crud}",
                 "description" => "Lista publica de Preços de Chips!"
             ]);
+
+        Route::get("/getVehicles", [$class, "getVehicles"])
+            ->name("getVehicles")
+            ->setWheres([
+                "group" => "{$crud}",
+                "description" => "Lista publica de Preços de Chips!"
+            ]);
     });

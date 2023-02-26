@@ -8,7 +8,7 @@ class FipeVehicle extends Model
 {
     protected $table = "fipe_vehicles";
 
-    protected  $fillable = [
+    protected $fillable = [
         "codigoTabelaReferencia",
         "codigoTipoVeiculo",
         "codigoMarca",
@@ -26,5 +26,6 @@ class FipeVehicle extends Model
         "TipoVeiculo",
         "SiglaCombustivel",
         "DataConsulta",
+        "ValorReal"
     ];
 }

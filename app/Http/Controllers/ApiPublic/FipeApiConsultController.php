@@ -11,6 +11,7 @@ use App\Http\Resources\PlanListPublicResource;
 use App\Models\Fipe\FipeBrand;
 use App\Models\Fipe\FipeModel;
 use App\Models\Fipe\FipeReference;
+use App\Models\Fipe\FipeVehicle;
 
 class FipeApiConsultController extends Controller
 {
@@ -45,12 +46,19 @@ class FipeApiConsultController extends Controller
 
     }
 
-    public function getVehicle(Request $request)
+    public function getVehicles(Request $request)
     {
-        return ChipPriceListPublicResource::collection(
-            isset($request['paginate']) && $request['paginate'] == 'false'
-            ? ChipPrice::filter($request->all())->get() : ChipPrice::filter($request->all())->paginate(10)
-        );
+        $reference = FipeReference::orderBy('created_at', 'desc')->first();
+        $model = FipeVehicle::where('codigoTabelaReferencia', $reference->Codigo)
+            ->where('codigoMarca', $request['brand_code'])
+            ->where('codigoModelo', $request['model_code'])
+            ->where('codigoTipoVeiculo', $request['vehicle_type']);
+
+        if ($request['search']) {
+            $model->where('Label', 'like', "%" . $request['search'] . "%");
+        }
+
+        return response()->json(['data' => $model->get()], 200);
 
     }
 
