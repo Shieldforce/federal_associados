@@ -14,13 +14,14 @@ class Payment extends Model
         "type",
         "value",
         "date",
+        "order_id",
     ];
 
     /**
      * Relations
      */
-    public function plan()
+    public function order()
     {
-        return $this->hasMany(Plan::class, "id", "plan_id");
+        return $this->hasOne(Order::class, "id", "order_id");
     }
 }

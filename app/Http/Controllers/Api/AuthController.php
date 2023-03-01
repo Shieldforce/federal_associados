@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Enums\StatusEnum;
 use App\Models\Order;
 use App\Models\Plan;
+use App\Models\Role;
 use App\Models\User;
 use App\Http\Middleware\ACL;
 use App\Services\Order\CalcPriceDynamicService;
@@ -86,6 +87,10 @@ class AuthController extends Controller
             ]);
 
             CreateItemsService::run($createOrder, $data);
+
+            $idsRoles = array_values(Role::where("name", "Cliente")->pluck("id")->toArray());
+
+            $user->roles()->sync($idsRoles, true);
 
             return response()->json([
                 "user"  => $user,

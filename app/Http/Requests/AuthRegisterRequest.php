@@ -42,7 +42,9 @@ class AuthRegisterRequest extends FormRequest
             "refer_antenna_id"      => ["integer"],
             "refer_vehicle_id"      => ["integer"],
             "adhesion_percentage"   => [
-                Rule::requiredIf($this["refer_vehicle_id"] && $this["father_uuid"]),
+                Rule::requiredIf($this["refer_vehicle_id"]),
+                // ID do pai é para acolher o associado e
+                // não para verificar se o ponto de apoio que está fazendo o registro!
                 "numeric",
                 "between:0.00,2.00",
             ],

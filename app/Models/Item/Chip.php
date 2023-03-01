@@ -13,7 +13,8 @@ class Chip extends Model
     protected $table = "chips";
 
     protected $fillable = [
-        "number_registration"
+        "number_registration",
+        "type",
     ];
 
     /**

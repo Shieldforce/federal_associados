@@ -14,13 +14,14 @@ class Billet extends Model
         "our_number",
         "link",
         "bar_code",
+        "order_id",
     ];
 
     /**
      * Relations
      */
-    public function plan()
+    public function order()
     {
-        return $this->hasMany(Plan::class, "id", "plan_id");
+        return $this->hasOne(Order::class, "id", "order_id");
     }
 }

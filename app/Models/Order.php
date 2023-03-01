@@ -52,6 +52,16 @@ class Order extends Model
         return $this->hasMany(Item::class, "order_id", "id");
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, "order_id", "id");
+    }
+
+    public function billets()
+    {
+        return $this->hasMany(Billet::class, "order_id", "id");
+    }
+
     /**
      * Mutators
      */
