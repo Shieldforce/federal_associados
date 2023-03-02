@@ -9,20 +9,20 @@ use App\Models\Fipe\FipeModel;
 use App\Models\Fipe\FipeReference;
 use App\Models\Fipe\FipeYear;
 
-enum EndpointsFipeEnum : string
+enum EndpointsFipeEnum: string
 {
     use BaseEnum;
 
-    case reference      = "\\App\\Jobs\\Fipe\\ReferenceJob";
-    case brand          = "\\App\\Jobs\\Fipe\\BrandJob";
+    case reference = "\\App\\Jobs\\Fipe\\ReferenceJob";
+    case brand = "\\App\\Jobs\\Fipe\\BrandJob";
 
-    case model          = "\\App\\Jobs\\Fipe\\ModelJob";
+    case model = "\\App\\Jobs\\Fipe\\ModelJob";
 
-    case year           = "\\App\\Jobs\\Fipe\\YearJob";
+    case year = "\\App\\Jobs\\Fipe\\YearJob";
 
-    case vehicle        = "\\App\\Jobs\\Fipe\\VehicleJob";
+    case vehicle = "\\App\\Jobs\\Fipe\\VehicleJob";
 
-    public static function enpointResolve($name): ?string
+    public static function endpointResolve($name): ?string
     {
         return match ($name) {
             self::reference->name => "/ConsultarTabelaDeReferencia",
@@ -44,11 +44,11 @@ enum EndpointsFipeEnum : string
 
     public static function selectType($name, $vehicleType = null)
     {
-        if($name == self::reference->name) {
+        if ($name == self::reference->name) {
             return [];
         }
 
-        if($name == self::brand->name) {
+        if ($name == self::brand->name) {
 
             $reference = FipeReference::orderBy('created_at', 'desc')->first();
             return [
@@ -57,17 +57,17 @@ enum EndpointsFipeEnum : string
             ];
         }
 
-        if($name == self::model->name) {
-            
+        if ($name == self::model->name) {
+
             return FipeBrand::get(['Label', 'Value', 'vehicleType'])->toArray();
         }
 
-        if($name == self::year->name) {
+        if ($name == self::year->name) {
 
-                return FipeModel::get(['codigoModelo', 'codigoMarca','codigoTabelaReferencia', 'codigoTipoVeiculo'])->toArray();
+            return FipeModel::get(['codigoModelo', 'codigoMarca', 'codigoTabelaReferencia', 'codigoTipoVeiculo'])->toArray();
         }
 
-        if($name == self::vehicle->name) {
+        if ($name == self::vehicle->name) {
 
             return FipeYear::get([
                 "codigoTabelaReferencia",

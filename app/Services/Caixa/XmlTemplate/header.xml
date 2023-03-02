@@ -1,0 +1,15 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                  xmlns:ext="http://caixa.gov.br/sibar/manutencao_cobranca_bancaria/boleto/externo"
+                  xmlns:sib="http://caixa.gov.br/sibar">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <ext:SERVICO_ENTRADA>
+            <sib:HEADER>
+                <VERSAO>1.0</VERSAO>
+                <AUTENTICACAO>FTGcCGGC/5mljUAvhPDOv3OaGbN1OE822PJtv6nr1yI=</AUTENTICACAO>
+                <USUARIO_SERVICO>SGCBS02P</USUARIO_SERVICO>
+                <OPERACAO>INCLUI_BOLETO</OPERACAO>
+                <SISTEMA_ORIGEM>SIGCB</SISTEMA_ORIGEM>
+                <UNIDADE>1679</UNIDADE>
+                <DATA_HORA>20170503102800</DATA_HORA>
+            </sib:HEADER>

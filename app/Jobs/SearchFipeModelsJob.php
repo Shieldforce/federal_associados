@@ -22,7 +22,7 @@ class SearchFipeModelsJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    
+
     public function handle()
     {
         $brands = EndpointsFipeEnum::selectType(EndpointsFipeEnum::model->name);
@@ -31,22 +31,22 @@ class SearchFipeModelsJob implements ShouldQueue
         $batches = [];
         foreach ($brands as $brand) {
 
-            $postParams  = [
-                "codigoTabelaReferencia"=> FipeReference::orderBy('created_at', 'desc')->first()->Codigo,
-                "codigoTipoVeiculo"=> $brand['vehicleType'],
-                "codigoMarca"=> $brand['Value']
+            $postParams = [
+                "codigoTabelaReferencia" => FipeReference::orderBy('created_at', 'desc')->first()->Codigo,
+                "codigoTipoVeiculo"      => $brand['vehicleType'],
+                "codigoMarca"            => $brand['Value']
             ];
 
             $results = FipeCurlService::run(
                 EndpointsFipeEnum::methodResolve(EndpointsFipeEnum::model->name),
-                EndpointsFipeEnum::enpointResolve(EndpointsFipeEnum::model->name),
+                EndpointsFipeEnum::endpointResolve(EndpointsFipeEnum::model->name),
                 $postParams
             );
 
 
             $class = EndpointsFipeEnum::model->value;
             $postParams['Modelos'] = $results['Modelos'];
-            $batches[] = new $class((array) $postParams);
+            $batches[] = new $class((array)$postParams);
         }
 
         $batch = Bus::batch($batches)->name('models')->then(function (Batch $batch) {
@@ -60,5 +60,5 @@ class SearchFipeModelsJob implements ShouldQueue
         return $batch->id;
     }
 
-   
+
 }

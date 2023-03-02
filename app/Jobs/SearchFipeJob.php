@@ -41,7 +41,7 @@ class SearchFipeJob implements ShouldQueue
 
             $results = FipeCurlService::run(
                 $this->endpointsFipeEnum::methodResolve($this->endpointsFipeEnum->name),
-                $this->endpointsFipeEnum::enpointResolve($this->endpointsFipeEnum->name),
+                $this->endpointsFipeEnum::endpointResolve($this->endpointsFipeEnum->name),
                 $this->endpointsFipeEnum::selectType($this->endpointsFipeEnum->name, $vehicleType)
             );
 
@@ -62,11 +62,10 @@ class SearchFipeJob implements ShouldQueue
         $batches = [];
 
 
-
         foreach ($allResults as $item) {
 
             $class = $this->endpointsFipeEnum->value;
-            $batches[] = new $class((array) $item);
+            $batches[] = new $class((array)$item);
         }
 
         $batch = Bus::batch($batches)->name($this->endpointsFipeEnum->name)->then(function (Batch $batch) {

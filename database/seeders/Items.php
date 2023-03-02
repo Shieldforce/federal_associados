@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\AllowedEnum;
 use App\Models\Item\Antenna;
 use App\Models\Item\Chip;
 use App\Models\Item\Tracker;
@@ -13,12 +14,12 @@ class Items extends Seeder
     public function run()
     {
         $chips = [
-            ["number_registration" => rand(100000000000, 200000000000)],
-            ["number_registration" => rand(100000000000, 200000000000)],
-            ["number_registration" => rand(100000000000, 200000000000)],
-            ["number_registration" => rand(100000000000, 200000000000)],
-            ["number_registration" => rand(100000000000, 200000000000)],
-            ["number_registration" => rand(100000000000, 200000000000)],
+            ["number_registration" => rand(100000000000, 200000000000), "type" => AllowedEnum::CHIP->value],
+            ["number_registration" => rand(100000000000, 200000000000), "type" => AllowedEnum::CHIP->value],
+            ["number_registration" => rand(100000000000, 200000000000), "type" => AllowedEnum::CHIP->value],
+            ["number_registration" => rand(100000000000, 200000000000), "type" => AllowedEnum::CHIP->value],
+            ["number_registration" => rand(100000000000, 200000000000), "type" => AllowedEnum::CHIP->value],
+            ["number_registration" => rand(100000000000, 200000000000), "type" => AllowedEnum::CHIP->value],
         ];
 
         foreach ($chips as $chip) {
